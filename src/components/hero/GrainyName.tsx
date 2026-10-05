@@ -38,10 +38,10 @@ export function GrainyName() {
     const canvas = canvasRef.current;
     if (!container || !canvas) return;
 
-    const width = container.clientWidth || 600;
-    // Calculate responsive font size
-    const fontSize = Math.min(Math.max(width * 0.115, 38), 108);
-    const height = Math.round(fontSize * 1.35);
+    const width = container.clientWidth || 700;
+    // Calculate responsive font size matching the reference screenshot
+    const fontSize = Math.min(Math.max(width * 0.12, 42), 104);
+    const height = Math.round(fontSize * 1.3);
 
     const dpr = typeof window !== "undefined" ? Math.min(window.devicePixelRatio || 1, 2) : 1;
     canvas.width = width * dpr;
@@ -55,34 +55,34 @@ export function GrainyName() {
     ctx.scale(dpr, dpr);
     ctx.clearRect(0, 0, width, height);
 
-    // Try resolving Instrument Serif from CSS or fallback to Georgia, serif
+    // Render using Century bold font matching user's spec
     ctx.fillStyle = "#FFFFFF";
-    ctx.font = `400 ${fontSize}px "Instrument Serif", Georgia, serif`;
+    ctx.font = `700 ${fontSize}px Century, "Century Schoolbook", "TeX Gyre Schola", Georgia, serif`;
     ctx.textBaseline = "middle";
     ctx.textAlign = "left";
-    ctx.fillText(siteConfig.name, 4, height / 2);
+    ctx.fillText(siteConfig.name, 2, height / 2);
 
     const imgData = ctx.getImageData(0, 0, width * dpr, height * dpr);
     const data = imgData.data;
     const grains: Grain[] = [];
 
-    // Sample grain particles along text contours
-    const step = Math.max(Math.round(2.5 * dpr), 2);
+    // Fine stippled sampling
+    const step = Math.max(Math.round(2 * dpr), 2);
 
     for (let py = 0; py < height * dpr; py += step) {
       for (let px = 0; px < width * dpr; px += step) {
         const idx = (py * (width * dpr) + px) * 4;
         const alpha = data[idx + 3];
 
-        if (alpha > 55) {
+        if (alpha > 60) {
           const originX = px / dpr;
           const originY = py / dpr;
 
           // Dispersal cloud: fine sand grains sprayed around each letter
           const angle = Math.random() * Math.PI * 2;
-          const radius = 4 + Math.random() * 22;
-          const scatterX = originX + Math.cos(angle) * radius + (Math.random() - 0.5) * 8;
-          const scatterY = originY + Math.sin(angle) * radius + (Math.random() - 0.5) * 8;
+          const radius = 5 + Math.random() * 22;
+          const scatterX = originX + Math.cos(angle) * radius + (Math.random() - 0.5) * 6;
+          const scatterY = originY + Math.sin(angle) * radius + (Math.random() - 0.5) * 6;
 
           grains.push({
             ox: originX,
@@ -91,10 +91,10 @@ export function GrainyName() {
             y: scatterY,
             sx: scatterX,
             sy: scatterY,
-            size: 0.9 + Math.random() * 1.4,
-            alpha: 0.45 + Math.random() * 0.55,
+            size: 0.9 + Math.random() * 1.3,
+            alpha: 0.5 + Math.random() * 0.5,
             driftAngle: Math.random() * Math.PI * 2,
-            driftSpeed: 0.02 + Math.random() * 0.04,
+            driftSpeed: 0.02 + Math.random() * 0.035,
           });
         }
       }
@@ -106,7 +106,6 @@ export function GrainyName() {
   }, []);
 
   useEffect(() => {
-    // Wait for web fonts if available, then sample
     if (typeof document !== "undefined" && document.fonts) {
       document.fonts.ready.then(() => {
         sampleGlyphs();
@@ -145,8 +144,6 @@ export function GrainyName() {
       const len = grains.length;
       const mouse = mousePosRef.current;
 
-      // When clean: pull smoothly into clean letter targets
-      // When idle: float in the scattered grain cloud
       const ease = clean ? 0.22 : 0.08;
 
       for (let i = 0; i < len; i++) {
@@ -157,18 +154,18 @@ export function GrainyName() {
         // Subtle Brownian grain drift when idle
         if (!clean) {
           g.driftAngle += g.driftSpeed;
-          targetX += Math.cos(g.driftAngle) * 1.2;
-          targetY += Math.sin(g.driftAngle) * 1.2;
+          targetX += Math.cos(g.driftAngle) * 0.8;
+          targetY += Math.sin(g.driftAngle) * 0.8;
         }
 
-        // Mouse kinetic repulsion on grains when nearby
+        // Mouse kinetic deflection
         if (mouse.active) {
           const dx = g.x - mouse.x;
           const dy = g.y - mouse.y;
           const distSq = dx * dx + dy * dy;
-          if (distSq < 3600 && distSq > 1) { // 60px radius
+          if (distSq < 3600 && distSq > 1) {
             const dist = Math.sqrt(distSq);
-            const force = (1 - dist / 60) * 12;
+            const force = (1 - dist / 60) * 10;
             g.x += (dx / dist) * force;
             g.y += (dy / dist) * force;
           }
@@ -218,17 +215,17 @@ export function GrainyName() {
       onMouseLeave={handleMouseLeave}
       onTouchStart={() => setIsClean((prev) => !prev)}
       className="relative w-full cursor-pointer select-none py-1 group"
-      title="Dhairya Bhatt — Hover to assemble grains into solid text"
+      title="Dhairya Bhatt — Hover to assemble grains into solid Century text"
     >
       {/* Accessible semantic heading for screen readers & SEO */}
       <h1 className="sr-only">{siteConfig.name}</h1>
 
-      {/* Clean vector text layer: smoothly fades in when grains lock into place */}
+      {/* Clean vector text layer in Century bold matching reference */}
       <div
-        className={`absolute inset-0 pointer-events-none font-serif text-5xl sm:text-7xl md:text-8xl lg:text-9xl text-white font-normal leading-none tracking-tight transition-opacity duration-500 ${
+        className={`absolute inset-0 pointer-events-none font-century font-bold text-5xl sm:text-7xl md:text-8xl lg:text-[96px] text-white leading-none tracking-tight transition-opacity duration-500 ${
           isClean ? "opacity-100" : "opacity-0"
         }`}
-        style={{ transform: "translateY(14%)" }}
+        style={{ transform: "translateY(12%)" }}
         aria-hidden="true"
       >
         {siteConfig.name}

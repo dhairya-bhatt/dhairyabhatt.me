@@ -15,20 +15,20 @@ export function PokeballButton({ isOpen, onClick, className = "" }: PokeballButt
       onClick={onClick}
       aria-label={isOpen ? "Close navigation menu" : "Open navigation menu"}
       aria-expanded={isOpen}
-      className={`relative group w-12 h-12 rounded-full flex items-center justify-center focus:outline-none transition-transform duration-300 hover:scale-105 ${className}`}
+      className={`relative group w-12 h-12 rounded-full flex items-center justify-center focus:outline-none transition-transform duration-300 hover:scale-105 cursor-pointer ${className}`}
     >
-      {/* Subtle outer ambient aura on hover */}
-      <span className="absolute inset-0 rounded-full bg-accent/20 scale-90 group-hover:scale-125 transition-transform duration-400 opacity-0 group-hover:opacity-100 blur-md pointer-events-none" />
+      {/* Subtle outer glow on hover */}
+      <span className="absolute inset-0 rounded-full bg-white/10 scale-90 group-hover:scale-125 transition-transform duration-300 opacity-0 group-hover:opacity-100 blur-sm pointer-events-none" />
 
       {isOpen ? (
-        // Close 'X' Button matching the Figma Menu frame
+        // Close 'X' Button
         <motion.div
           key="close-icon"
           initial={{ rotate: -90, scale: 0.8, opacity: 0 }}
           animate={{ rotate: 0, scale: 1, opacity: 1 }}
           exit={{ rotate: 90, scale: 0.8, opacity: 0 }}
           transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-          className="w-11 h-11 rounded-full bg-[#18181B] border border-white/20 flex items-center justify-center shadow-2xl hover:border-accent hover:bg-accent/10 transition-colors"
+          className="w-11 h-11 rounded-full bg-[#18181A] border border-white/20 flex items-center justify-center shadow-2xl hover:border-white transition-colors"
         >
           <svg
             className="w-5 h-5 text-white"
@@ -41,54 +41,50 @@ export function PokeballButton({ isOpen, onClick, className = "" }: PokeballButt
           </svg>
         </motion.div>
       ) : (
-        // Pokéball Icon with silky mechanical micro-split & glow
+        // Pokéball Icon matching the Figma prototype image exactly
+        // Outer white stroke, dark top hemisphere, crisp white bottom hemisphere, center button
         <motion.div
           key="pokeball-icon"
-          className="relative w-10 h-10 select-none cursor-pointer"
-          whileHover="hover"
-          initial="idle"
+          className="relative w-11 h-11 select-none"
+          whileHover={{ scale: 1.08 }}
+          transition={{ type: "spring", stiffness: 400, damping: 25 }}
         >
-          {/* Subtle Outer Housing */}
-          <div className="w-10 h-10 rounded-full bg-[#121214] shadow-xl overflow-hidden relative border border-white/25 group-hover:border-white/50 transition-colors duration-300">
-            {/* Luminous Inner Core (reveals when split opens) */}
-            <div className="absolute inset-0 bg-accent/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+          <svg
+            viewBox="0 0 100 100"
+            className="w-full h-full drop-shadow-md"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            {/* Outer White Rim */}
+            <circle cx="50" cy="50" r="46" stroke="#FFFFFF" strokeWidth="3" fill="#111111" />
 
-            {/* Top Shell (Clean White with smooth vertical release) */}
-            <motion.div
-              variants={{
-                idle: { y: 0 },
-                hover: { y: -1.5 },
-              }}
-              transition={{ type: "spring", stiffness: 400, damping: 25 }}
-              className="absolute top-0 left-0 right-0 h-[20px] bg-white border-b border-black/40 z-10"
+            {/* Bottom White Hemisphere */}
+            <path
+              d="M 5 50 A 45 45 0 0 0 95 50 Z"
+              fill="#FFFFFF"
             />
 
-            {/* Bottom Shell (Deep Obsidian with smooth downward release) */}
-            <motion.div
-              variants={{
-                idle: { y: 0 },
-                hover: { y: 1.5 },
-              }}
-              transition={{ type: "spring", stiffness: 400, damping: 25 }}
-              className="absolute bottom-0 left-0 right-0 h-[20px] bg-[#161618] border-t border-black/40 z-10"
+            {/* Top Dark Hemisphere */}
+            <path
+              d="M 5 50 A 45 45 0 0 1 95 50 Z"
+              fill="#111111"
             />
 
-            {/* Central Dividing Band */}
-            <div className="absolute top-[18px] left-0 right-0 h-[4px] bg-[#0A0A0C] z-20" />
+            {/* Center Dividing Belt */}
+            <line x1="4" y1="50" x2="96" y2="50" stroke="#111111" strokeWidth="5" />
 
-            {/* Center Button Housing */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[18px] h-[18px] rounded-full bg-[#0A0A0C] flex items-center justify-center border border-black z-30 shadow-md">
-              {/* Center Ring with Precision Accent Glow */}
-              <motion.div
-                variants={{
-                  idle: { scale: 1 },
-                  hover: { scale: 1.15 },
-                }}
-                transition={{ type: "spring", stiffness: 450, damping: 20 }}
-                className="w-2.5 h-2.5 rounded-full bg-white transition-all duration-300 group-hover:bg-accent group-hover:shadow-[0_0_10px_rgba(255,70,50,0.9)]"
-              />
-            </div>
-          </div>
+            {/* Center Button Outer Dark Ring */}
+            <circle cx="50" cy="50" r="14" fill="#111111" stroke="#FFFFFF" strokeWidth="2.5" />
+
+            {/* Center Button Inner Circle */}
+            <circle
+              cx="50"
+              cy="50"
+              r="7"
+              fill="#FFFFFF"
+              className="group-hover:fill-accent transition-colors duration-300"
+            />
+          </svg>
         </motion.div>
       )}
     </button>

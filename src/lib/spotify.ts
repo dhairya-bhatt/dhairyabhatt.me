@@ -45,6 +45,8 @@ export async function getNowPlaying() {
       album: "Suite Bergamasque",
       albumImageUrl: "/photos/pictures (1).jpeg",
       songUrl: "https://open.spotify.com",
+      progressMs: 84000,
+      durationMs: 242000,
       isFallback: true,
     };
   }

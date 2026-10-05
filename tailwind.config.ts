@@ -11,34 +11,36 @@ const config: Config = {
     extend: {
       colors: {
         canvas: {
-          DEFAULT: "#141414",
-          subtle: "#181818",
-          elevated: "#1E1E1E",
+          DEFAULT: "#111111",
+          subtle: "#161616",
+          elevated: "#1C1C1E",
         },
         surface: {
-          DEFAULT: "#1C1C1E",
-          hover: "#262628",
-          border: "#2C2C2E",
-          highlight: "#3A3A3C",
+          DEFAULT: "#18181A",
+          hover: "#222224",
+          border: "#28282B",
+          highlight: "#353538",
         },
         accent: {
-          DEFAULT: "#FF4632", // Vermilion Pokéball Red
+          DEFAULT: "#FF4632",
           hover: "#FF5E4D",
           muted: "#E04A36",
           subtle: "rgba(255, 70, 50, 0.12)",
         },
         ink: {
-          primary: "#F4F4F5",
-          secondary: "#A1A1AA",
-          muted: "#71717A",
-          faint: "#52525B",
+          primary: "#FFFFFF",
+          secondary: "#B0B0B5",
+          muted: "#7E7E86",
+          faint: "#505056",
         },
         parchment: "#F5F2EB",
       },
       fontFamily: {
-        serif: ["var(--font-instrument-serif)", "Georgia", "serif"],
-        sans: ["var(--font-geist-sans)", "system-ui", "-apple-system", "sans-serif"],
-        mono: ["var(--font-geist-mono)", "monospace"],
+        century: ["Century", "Century Schoolbook", "TeX Gyre Schola", "Georgia", "serif"],
+        helvetica: ["Helvetica Neue", "Helvetica", "Arial", "sans-serif"],
+        serif: ["Century", "Century Schoolbook", "TeX Gyre Schola", "Georgia", "serif"],
+        sans: ["Helvetica Neue", "Helvetica", "Arial", "sans-serif"],
+        mono: ["var(--font-geist-mono)", "Courier New", "monospace"],
       },
       animation: {
         "marquee": "marquee 32s linear infinite",

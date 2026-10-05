@@ -20,10 +20,10 @@ export function AboutSection() {
         <div className="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-14 items-center">
           {/* Left Column: Bio Text */}
           <div className="md:col-span-7 space-y-5">
-            <p className="font-sans text-base sm:text-lg md:text-xl text-ink-secondary leading-relaxed font-light">
+            <p className="font-helvetica text-base sm:text-lg md:text-xl text-[#B4B4BC] leading-relaxed font-normal">
               Hello! I&apos;m Dhairya Bhatt and currently studying Mathematics and Computer Science at Queen&apos;s University Belfast. My journey has been shaped by a deep-seated passion for both computers and mathematics. These interests have not only influenced my academic pursuits but have also led me to explore various innovative projects and initiatives.
             </p>
-            <p className="font-sans text-sm sm:text-base text-ink-muted leading-relaxed">
+            <p className="font-helvetica text-sm sm:text-base text-[#888890] leading-relaxed">
               My technical interests revolve around quantitative analysis, high-performance systems, and full-stack software engineering. I enjoy designing rigorous algorithms, dissecting financial market mechanics, and engineering intuitive digital tools.
             </p>
 
@@ -79,7 +79,7 @@ export function AboutSection() {
 
         {/* 4. Understated Vinland Saga Quote */}
         <div className="mt-16 pt-8 border-t border-white/[0.06] text-center">
-          <p className="font-serif italic text-base md:text-lg text-ink-muted/50 hover:text-ink-secondary transition-colors inline-block cursor-default">
+          <p className="font-century italic text-base md:text-lg text-ink-muted/50 hover:text-ink-secondary transition-colors inline-block cursor-default">
             &ldquo;I have no enemies.&rdquo;
           </p>
         </div>

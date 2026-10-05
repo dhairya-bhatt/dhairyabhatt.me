@@ -3,10 +3,10 @@
 @tailwind utilities;
 
 :root {
-  --background: #141414;
-  --foreground: #F4F4F5;
+  --background: #111111;
+  --foreground: #FFFFFF;
   --accent: #FF4632;
-  --surface: #1C1C1E;
+  --surface: #18181A;
 }
 
 * {
@@ -15,8 +15,8 @@
 
 html {
   scroll-behavior: smooth;
-  background-color: var(--background);
-  color: var(--foreground);
+  background-color: #111111;
+  color: #FFFFFF;
   color-scheme: dark;
 }
 
@@ -24,10 +24,10 @@ body {
   margin: 0;
   padding: 0;
   min-height: 100vh;
-  background-color: #141414;
-  color: #F4F4F5;
+  background-color: #111111;
+  color: #FFFFFF;
   overflow-x: hidden;
-  font-family: var(--font-geist-sans), system-ui, -apple-system, sans-serif;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -44,16 +44,16 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: #141414;
+  background: #111111;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #2C2C2E;
+  background: #28282B;
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #3A3A3C;
+  background: #3A3A3D;
 }
 
 /* Global Subtle Film Grain Overlay */
@@ -64,7 +64,7 @@ body {
   height: 100vh;
   pointer-events: none;
   z-index: 9999;
-  opacity: 0.035;
+  opacity: 0.03;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
 }
 

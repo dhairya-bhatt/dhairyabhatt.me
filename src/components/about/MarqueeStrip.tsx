@@ -41,13 +41,13 @@ export function MarqueeStrip({
         className="flex whitespace-nowrap will-change-transform animate-marquee"
         style={{ animationDuration: "28s" }}
       >
-        <span className="font-serif text-4xl sm:text-6xl md:text-8xl tracking-tight text-white uppercase font-normal mr-6">
+        <span className="font-century text-4xl sm:text-6xl md:text-8xl tracking-tight text-white uppercase font-normal mr-6">
           {text}
         </span>
-        <span className="font-serif text-4xl sm:text-6xl md:text-8xl tracking-tight text-white uppercase font-normal mr-6" aria-hidden="true">
+        <span className="font-century text-4xl sm:text-6xl md:text-8xl tracking-tight text-white uppercase font-normal mr-6" aria-hidden="true">
           {text}
         </span>
-        <span className="font-serif text-4xl sm:text-6xl md:text-8xl tracking-tight text-white uppercase font-normal mr-6" aria-hidden="true">
+        <span className="font-century text-4xl sm:text-6xl md:text-8xl tracking-tight text-white uppercase font-normal mr-6" aria-hidden="true">
           {text}
         </span>
       </div>
