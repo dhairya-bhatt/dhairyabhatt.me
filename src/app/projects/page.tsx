@@ -24,26 +24,23 @@ export default function ProjectsPage() {
 
       <main className="max-w-6xl mx-auto px-6 md:px-16 lg:px-20 pt-32 pb-24">
         {/* Navigation Back */}
-        <div className="mb-8">
+        <div className="mb-10">
           <Link
             href="/"
-            className="inline-flex items-center gap-2 font-mono text-xs text-ink-muted hover:text-white transition-colors"
+            className="inline-flex items-center gap-1.5 font-funnel text-xs text-ink-muted hover:text-white transition-colors"
           >
             <ArrowLeft className="w-3.5 h-3.5 text-accent" />
-            <span>RETURN HOME</span>
+            <span>back to home</span>
           </Link>
         </div>
 
         {/* Page Title */}
-        <div className="space-y-3 mb-12">
-          <span className="font-mono text-xs uppercase tracking-widest text-accent font-medium">
-            INDEX // CODE &amp; ARCHITECTURE
-          </span>
-          <h1 className="font-serif text-5xl sm:text-6xl md:text-7xl text-white tracking-tight">
-            Projects &amp; Systems
+        <div className="space-y-2 mb-12">
+          <h1 className="font-funnel text-4xl sm:text-5xl md:text-6xl text-white tracking-tight lowercase">
+            all projects
           </h1>
-          <p className="font-sans text-base md:text-lg text-ink-secondary/90 max-w-2xl font-light">
-            An index of algorithmic visualizers, real-time campus mapping games, and low-latency market infrastructure simulations built at Queen&apos;s University Belfast.
+          <p className="font-funnel text-sm sm:text-base text-ink-muted max-w-xl font-light">
+            Quantitative models, algorithmic engines, and distributed systems built at Queen&apos;s University Belfast.
           </p>
         </div>
 
@@ -53,13 +50,13 @@ export default function ProjectsPage() {
             <button
               key={cat}
               onClick={() => setActiveCategory(cat)}
-              className={`font-mono text-xs px-4 py-1.5 rounded-full border transition-all duration-200 cursor-pointer ${
+              className={`font-funnel text-xs sm:text-sm lowercase px-4 py-1.5 rounded-full border transition-all duration-200 cursor-pointer ${
                 activeCategory === cat
                   ? "bg-white text-black border-white font-medium"
                   : "bg-white/[0.03] text-ink-muted border-white/[0.08] hover:text-white hover:border-white/20"
               }`}
             >
-              {cat}
+              {cat.toLowerCase()}
             </button>
           ))}
         </div>

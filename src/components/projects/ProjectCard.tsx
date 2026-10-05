@@ -72,73 +72,62 @@ export function ProjectCard({ project }: ProjectCardProps) {
       )}
 
       {/* Card Content */}
-      <div className="p-6 md:p-8 flex-1 flex flex-col justify-between space-y-5 relative z-10">
+      <div className="p-6 sm:p-7 flex-1 flex flex-col justify-between space-y-5 relative z-10">
         <div>
-          {/* Category & Title */}
+          {/* Category & Year */}
           <div className="flex items-center justify-between gap-4 mb-2">
-            <span className="font-mono text-[11px] text-accent uppercase tracking-wider">
-              {project.category}
+            <span className="font-funnel text-xs text-ink-muted lowercase">
+              {project.category.toLowerCase()}
+            </span>
+            <span className="font-funnel text-xs text-ink-muted/70">
+              2025
             </span>
           </div>
 
-          <h3 className="font-serif text-2xl md:text-3xl text-white group-hover:text-accent transition-colors">
+          <h3 className="font-funnel font-medium text-xl sm:text-2xl text-white group-hover:text-accent transition-colors tracking-tight">
             {project.title}
           </h3>
 
-          <p className="font-sans text-sm text-ink-muted mt-2 line-clamp-3 leading-relaxed">
-            {project.description}
+          <p className="font-funnel text-sm text-ink-muted mt-2 leading-relaxed line-clamp-2 font-light">
+            {project.tagline}
           </p>
         </div>
 
-        {/* Tech Stack Chips */}
-        <div>
-          <div className="flex flex-wrap gap-1.5 pt-2">
-            {project.stack.map((tech) => (
+        {/* Tech Stack & Links */}
+        <div className="pt-2 border-t border-white/[0.06] flex items-center justify-between">
+          <div className="flex flex-wrap gap-1.5">
+            {project.stack.slice(0, 3).map((tech) => (
               <span
                 key={tech}
-                className="font-mono text-[11px] text-ink-secondary bg-white/[0.04] px-2.5 py-1 rounded border border-white/[0.06]"
+                className="font-funnel text-[11px] text-ink-secondary bg-white/[0.04] px-2 py-0.5 rounded border border-white/[0.06]"
               >
                 {tech}
               </span>
             ))}
           </div>
 
-          {/* Metrics if present */}
-          {project.metrics && (
-            <div className="mt-4 pt-4 border-t border-white/[0.06] grid grid-cols-2 gap-2 font-mono text-[11px] text-ink-muted">
-              {project.metrics.map((m, i) => (
-                <div key={i} className="flex items-center gap-1.5">
-                  <span className="w-1 h-1 rounded-full bg-accent" />
-                  <span>{m}</span>
-                </div>
-              ))}
-            </div>
-          )}
-
-          {/* Action Links */}
-          <div className="mt-6 flex items-center gap-4 font-mono text-xs">
-            {project.liveUrl && (
+          <div className="flex items-center gap-3 font-funnel text-xs">
+            {project.liveUrl ? (
               <a
                 href={project.liveUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-white hover:text-accent flex items-center gap-1.5 transition-colors group/link"
+                className="text-white hover:text-accent inline-flex items-center gap-1 transition-colors"
               >
-                <span>VISIT DEMO</span>
-                <ExternalLink className="w-3.5 h-3.5 group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5 transition-transform" />
+                <span>live</span>
+                <ArrowUpRight className="w-3.5 h-3.5" />
               </a>
-            )}
-            {project.githubUrl && (
+            ) : project.githubUrl ? (
               <a
                 href={project.githubUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-ink-muted hover:text-white flex items-center gap-1.5 transition-colors"
+                className="text-ink-muted hover:text-white inline-flex items-center gap-1 transition-colors"
               >
-                <Github className="w-3.5 h-3.5" />
-                <span>SOURCE</span>
+                <span>source</span>
+                <ArrowUpRight className="w-3.5 h-3.5" />
               </a>
-            )}
+            ) : null}
           </div>
         </div>
       </div>

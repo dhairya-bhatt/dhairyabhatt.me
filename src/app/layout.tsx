@@ -2,7 +2,6 @@ import type { Metadata, Viewport } from "next";
 import { Instrument_Serif, Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { CustomCursor } from "@/components/ui/CustomCursor";
-import { SpotifyWidget } from "@/components/spotify/SpotifyWidget";
 import { KonamiListener } from "@/components/ui/KonamiListener";
 
 const instrumentSerif = Instrument_Serif({
@@ -101,9 +100,6 @@ export default function RootLayout({
 
         {/* Secret Konami code listener */}
         <KonamiListener />
-
-        {/* Pinned Discord-style Spotify Now-Playing Widget */}
-        <SpotifyWidget />
 
         {/* Main Content */}
         <div className="flex-1 flex flex-col relative z-10">

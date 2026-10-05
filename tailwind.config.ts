@@ -38,8 +38,9 @@ const config: Config = {
       fontFamily: {
         century: ["Century", "Century Schoolbook", "TeX Gyre Schola", "Georgia", "serif"],
         helvetica: ["Helvetica Neue", "Helvetica", "Arial", "sans-serif"],
+        funnel: ["'Funnel Sans'", "-apple-system", "BlinkMacSystemFont", "sans-serif"],
         serif: ["Century", "Century Schoolbook", "TeX Gyre Schola", "Georgia", "serif"],
-        sans: ["Helvetica Neue", "Helvetica", "Arial", "sans-serif"],
+        sans: ["'Funnel Sans'", "Inter", "-apple-system", "BlinkMacSystemFont", "sans-serif"],
         mono: ["var(--font-geist-mono)", "Courier New", "monospace"],
       },
       animation: {

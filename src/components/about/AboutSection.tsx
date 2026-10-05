@@ -19,25 +19,34 @@ export function AboutSection() {
         {/* 2. Main Bio & Portrait Row matching Figma */}
         <div className="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-14 items-center">
           {/* Left Column: Bio Text */}
-          <div className="md:col-span-7 space-y-5">
-            <p className="font-helvetica text-base sm:text-lg md:text-xl text-[#B4B4BC] leading-relaxed font-normal">
-              Hello! I&apos;m Dhairya Bhatt and currently studying Mathematics and Computer Science at Queen&apos;s University Belfast. My journey has been shaped by a deep-seated passion for both computers and mathematics. These interests have not only influenced my academic pursuits but have also led me to explore various innovative projects and initiatives.
+          <div className="md:col-span-7 space-y-6">
+            <p className="font-funnel text-lg sm:text-xl md:text-2xl text-white font-normal leading-relaxed">
+              I study Mathematics and Computer Science at Queen&apos;s University Belfast.
             </p>
-            <p className="font-helvetica text-sm sm:text-base text-[#888890] leading-relaxed">
-              My technical interests revolve around quantitative analysis, high-performance systems, and full-stack software engineering. I enjoy designing rigorous algorithms, dissecting financial market mechanics, and engineering intuitive digital tools.
+            <p className="font-funnel text-base sm:text-lg text-ink-secondary leading-relaxed font-light">
+              Drawn to the intersection of mathematical theory and high-performance computing—focusing on market microstructure, quantitative modeling, and low-latency systems.
+            </p>
+            <p className="font-funnel text-sm sm:text-base text-ink-muted leading-relaxed font-light">
+              I value systems that balance mathematical rigor and engineering craftsmanship: fast, reliable, and built with purpose.
             </p>
 
-            {/* Academic Highlights */}
-            <div className="pt-2 flex flex-wrap gap-2 font-mono text-xs text-ink-muted">
-              <span className="px-3 py-1 rounded-full bg-white/[0.04] border border-white/[0.08]">
-                Queen&apos;s University Belfast
-              </span>
-              <span className="px-3 py-1 rounded-full bg-white/[0.04] border border-white/[0.08]">
-                BSc Maths &amp; CS
-              </span>
-              <span className="px-3 py-1 rounded-full bg-white/[0.04] border border-white/[0.08]">
-                Class of &apos;28
-              </span>
+            {/* Clean Experience / Timeline in Anushka's style */}
+            <div className="pt-4 space-y-3 border-t border-white/[0.08]">
+              <div className="flex items-baseline justify-between font-funnel text-xs sm:text-sm">
+                <span className="text-white font-medium">Queen&apos;s University Belfast</span>
+                <span className="text-ink-muted">2024 — Present</span>
+              </div>
+              <p className="font-funnel text-xs text-ink-muted -mt-2">
+                BSc Mathematics &amp; Computer Science
+              </p>
+
+              <div className="flex items-baseline justify-between font-funnel text-xs sm:text-sm pt-2">
+                <span className="text-white font-medium">Quantitative Systems &amp; Research</span>
+                <span className="text-ink-muted">2025 — Present</span>
+              </div>
+              <p className="font-funnel text-xs text-ink-muted -mt-2">
+                High-performance order matching engines &amp; algorithmic simulations
+              </p>
             </div>
           </div>
 
@@ -59,12 +68,12 @@ export function AboutSection() {
 
         {/* 3. Curated Small Space for Fun Things (Music Player & Photo Collage) */}
         <div className="mt-16 md:mt-20 pt-10 border-t border-white/[0.08]">
-          <div className="flex items-center justify-between mb-8 font-mono text-xs text-ink-muted">
-            <span className="uppercase tracking-widest text-[11px] text-ink-secondary">
-              [ PLAYGROUND &amp; EPHEMERA ]
+          <div className="flex items-center justify-between mb-8 font-funnel text-xs sm:text-sm text-ink-muted">
+            <span className="text-white font-medium lowercase">
+              when i&apos;m not coding
             </span>
-            <span className="hidden sm:inline text-ink-muted/60">
-              AUDIO &amp; CASUAL ARCHIVES
+            <span className="text-ink-muted lowercase">
+              live music &amp; archives
             </span>
           </div>
 

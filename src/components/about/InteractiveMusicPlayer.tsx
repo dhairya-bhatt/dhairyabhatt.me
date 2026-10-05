@@ -166,7 +166,7 @@ export function InteractiveMusicPlayer() {
             </span>
           </a>
 
-          <p className="font-helvetica text-xs text-ink-secondary truncate">
+          <p className="font-funnel text-xs text-ink-secondary truncate">
             {data?.artist || "Spotify Account"}
           </p>
 

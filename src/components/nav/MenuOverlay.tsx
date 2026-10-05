@@ -5,7 +5,7 @@ import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { siteConfig } from "@/content/site";
 import { formatTimeInBelfast } from "@/lib/utils";
-import { ArrowUpRight, Github, Linkedin, Code2, Mail } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 
 interface MenuOverlayProps {
   isOpen: boolean;
@@ -15,44 +15,31 @@ interface MenuOverlayProps {
 const NAV_ITEMS = [
   {
     number: "01",
-    label: "HOME",
+    label: "home",
     href: "/",
-    pokemonCallout: "HOME GROUND!",
-    silhouetteName: "Pikachu",
-    description: "Landing, introduction & identity",
   },
   {
     number: "02",
-    label: "ABOUT ME",
+    label: "about",
     href: "/#about",
-    pokemonCallout: "ABOUT ME!",
-    silhouetteName: "Mewtwo",
-    description: "Background, QUB studies & photo gallery",
   },
   {
     number: "03",
-    label: "PROJECTS",
+    label: "work",
     href: "/projects",
-    pokemonCallout: "PROJECTS!",
-    silhouetteName: "Charizard",
-    description: "GeoGuessr, pathfinding & quant systems",
   },
   {
     number: "04",
-    label: "CONTACT",
+    label: "contact",
     href: "/contact",
-    pokemonCallout: "CONTACT!",
-    silhouetteName: "Gengar",
-    description: "Direct lines, socials & placement inquiries",
   },
 ];
 
 export function MenuOverlay({ isOpen, onClose }: MenuOverlayProps) {
-  const [hoveredItem, setHoveredItem] = useState<typeof NAV_ITEMS[0] | null>(null);
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [belfastTime, setBelfastTime] = useState("");
   const overlayRef = useRef<HTMLDivElement>(null);
 
-  // Update live clock
   useEffect(() => {
     setBelfastTime(formatTimeInBelfast());
     const timer = setInterval(() => {
@@ -61,7 +48,6 @@ export function MenuOverlay({ isOpen, onClose }: MenuOverlayProps) {
     return () => clearInterval(timer);
   }, []);
 
-  // Trap focus and handle Escape key
   useEffect(() => {
     if (!isOpen) return;
 
@@ -107,106 +93,85 @@ export function MenuOverlay({ isOpen, onClose }: MenuOverlayProps) {
           aria-modal="true"
           aria-label="Site Navigation"
           initial={{
-            clipPath: "circle(0% at calc(100% - 2.5rem) 2.5rem)",
+            clipPath: "circle(0% at calc(100% - 3.5rem) 3.5rem)",
             opacity: 0,
           }}
           animate={{
-            clipPath: "circle(150% at calc(100% - 2.5rem) 2.5rem)",
+            clipPath: "circle(150% at calc(100% - 3.5rem) 3.5rem)",
             opacity: 1,
           }}
           exit={{
-            clipPath: "circle(0% at calc(100% - 2.5rem) 2.5rem)",
+            clipPath: "circle(0% at calc(100% - 3.5rem) 3.5rem)",
             opacity: 0,
           }}
-          transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
-          className="fixed inset-0 z-50 bg-[#121212] flex flex-col justify-between overflow-y-auto px-6 py-8 md:px-16 md:py-12 text-ink-primary"
+          transition={{ duration: 0.55, ease: [0.19, 1, 0.22, 1] }}
+          className="fixed inset-0 z-50 bg-[#0F0F11] flex flex-col justify-between px-8 sm:px-14 md:px-20 lg:px-28 py-8 md:py-12 text-ink-primary font-funnel select-none"
         >
-          {/* Background Quarter-Circle Graphic (Referencing Figma Menu Frame) */}
-          <div
-            className="pointer-events-none absolute top-0 left-0 w-[280px] h-[280px] md:w-[480px] md:h-[480px] rounded-br-[100%] border-r border-b border-white/[0.08] bg-white/[0.02]"
-            aria-hidden="true"
-          />
+          {/* Top Bar with Minimal Header & Close Button */}
+          <div className="relative z-20 flex items-center justify-between">
+            <span className="text-xs uppercase tracking-wider text-ink-muted/80 font-mono">
+              menu
+            </span>
 
-          {/* Top Bar Header with subtle Pokedex Archive header and prominent Close Button */}
-          <div className="relative z-20 flex items-start justify-between">
-            <div className="space-y-1">
-              <div className="flex items-center gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
-                <span className="font-mono text-xs tracking-widest uppercase text-ink-muted font-medium">
-                  POKÉDEX ARCHIVE
-                </span>
-              </div>
-              <motion.p
-                key={hoveredItem ? hoveredItem.label : "default"}
-                initial={{ opacity: 0, y: 3 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.15 }}
-                className="font-serif italic text-base md:text-lg text-ink-secondary"
-              >
-                {hoveredItem ? `It's… ${hoveredItem.pokemonCallout}` : "Select a destination"}
-              </motion.p>
-            </div>
-
-            {/* Prominent Figma-styled Close Button */}
+            {/* Circular Close Button */}
             <button
               onClick={onClose}
-              aria-label="Close navigation menu"
-              className="w-12 h-12 rounded-full bg-[#18181B] border border-white/20 flex items-center justify-center text-white hover:bg-accent hover:border-accent transition-all duration-200 shadow-xl focus:outline-none cursor-pointer group"
+              aria-label="Close navigation"
+              className="w-12 h-12 rounded-full border border-white/20 bg-white/[0.04] flex items-center justify-center text-white hover:bg-white hover:text-black transition-all duration-200 cursor-pointer group focus:outline-none"
             >
               <svg
-                className="w-5 h-5 text-white group-hover:scale-110 transition-transform"
+                className="w-4 h-4 transition-transform group-hover:scale-110"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
-                strokeWidth={2.5}
+                strokeWidth={2}
               >
                 <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
               </svg>
             </button>
           </div>
 
-          {/* Center Navigation Links */}
-          <div className="relative z-10 my-auto py-10 max-w-4xl">
+          {/* Navigation Links with Sleek Professional Hover Transition */}
+          <div className="relative z-10 my-auto py-8">
             <nav aria-label="Main Navigation">
               <ul className="space-y-4 md:space-y-6">
-                {NAV_ITEMS.map((item) => {
-                  const isHovered = hoveredItem?.label === item.label;
+                {NAV_ITEMS.map((item, idx) => {
+                  const isHovered = hoveredIndex === idx;
+                  const isAnyHovered = hoveredIndex !== null;
+                  const isDimmed = isAnyHovered && !isHovered;
+
                   return (
                     <li
                       key={item.label}
-                      onMouseEnter={() => setHoveredItem(item)}
-                      onMouseLeave={() => setHoveredItem(null)}
-                      className="group"
+                      onMouseEnter={() => setHoveredIndex(idx)}
+                      onMouseLeave={() => setHoveredIndex(null)}
                     >
                       <Link
                         href={item.href}
                         onClick={onClose}
-                        className="flex flex-col md:flex-row md:items-baseline gap-2 md:gap-8 focus:outline-none"
+                        className={`inline-flex items-baseline gap-4 md:gap-8 transition-all duration-300 transform focus:outline-none ${
+                          isHovered
+                            ? "translate-x-3 text-white"
+                            : isDimmed
+                            ? "opacity-35 text-ink-muted"
+                            : "text-ink-secondary"
+                        }`}
                       >
-                        <span className="font-mono text-xs md:text-sm text-ink-muted group-hover:text-accent transition-colors">
+                        <span className="font-mono text-xs md:text-sm text-ink-muted font-normal">
                           {item.number}
                         </span>
 
-                        <div className="flex items-center gap-4">
-                          <span
-                            className={`font-serif text-4xl sm:text-6xl md:text-7xl lg:text-8xl tracking-tight transition-all duration-300 ${
-                              isHovered
-                                ? "text-white tracking-wide"
-                                : "text-ink-secondary group-hover:text-white"
-                            }`}
-                          >
-                            {item.label}
-                          </span>
-                          <ArrowUpRight
-                            className={`w-6 h-6 md:w-8 md:h-8 text-accent transition-all duration-250 ${
-                              isHovered ? "opacity-100 translate-x-1 -translate-y-1" : "opacity-0 -translate-x-1 translate-y-1"
-                            }`}
-                          />
-                        </div>
-
-                        <span className="font-mono text-[11px] text-ink-muted hidden lg:block opacity-0 group-hover:opacity-100 transition-opacity uppercase tracking-wider">
-                          // {item.description}
+                        <span className="font-century text-4xl sm:text-6xl md:text-7xl lg:text-8xl tracking-tight leading-none lowercase">
+                          {item.label}
                         </span>
+
+                        <ArrowUpRight
+                          className={`w-6 h-6 md:w-8 md:h-8 text-accent transition-all duration-300 ${
+                            isHovered
+                              ? "opacity-100 translate-x-1 -translate-y-1"
+                              : "opacity-0 -translate-x-2 translate-y-2 pointer-events-none"
+                          }`}
+                        />
                       </Link>
                     </li>
                   );
@@ -215,53 +180,36 @@ export function MenuOverlay({ isOpen, onClose }: MenuOverlayProps) {
             </nav>
           </div>
 
-          {/* Bottom Footer Info inside Menu */}
-          <div className="relative z-10 pt-6 border-t border-white/[0.08] flex flex-col md:flex-row items-start md:items-center justify-between gap-6 font-mono text-xs text-ink-muted">
-            {/* Social Links */}
-            <div className="flex flex-wrap items-center gap-6">
+          {/* Bottom Info Bar */}
+          <div className="relative z-10 pt-6 border-t border-white/[0.08] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 text-xs text-ink-muted">
+            <div className="flex items-center gap-6">
+              <a
+                href={siteConfig.cvUrl}
+                download
+                className="text-white hover:text-accent transition-colors font-mono"
+              >
+                [ resume.pdf ]
+              </a>
               <a
                 href={siteConfig.socials.find((s) => s.name === "GitHub")?.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hover:text-white transition-colors flex items-center gap-1.5"
+                className="hover:text-white transition-colors font-mono"
               >
-                <Github className="w-3.5 h-3.5 text-accent" />
-                <span>GITHUB</span>
+                github
               </a>
               <a
                 href={siteConfig.socials.find((s) => s.name === "LinkedIn")?.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hover:text-white transition-colors flex items-center gap-1.5"
+                className="hover:text-white transition-colors font-mono"
               >
-                <Linkedin className="w-3.5 h-3.5 text-accent" />
-                <span>LINKEDIN</span>
-              </a>
-              <a
-                href={siteConfig.socials.find((s) => s.name === "LeetCode")?.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-white transition-colors flex items-center gap-1.5"
-              >
-                <Code2 className="w-3.5 h-3.5 text-accent" />
-                <span>LEETCODE</span>
-              </a>
-              <a
-                href={siteConfig.cvUrl}
-                download
-                className="text-white hover:text-accent transition-colors flex items-center gap-1.5"
-              >
-                <span>[ RESUME / CV.PDF ]</span>
+                linkedin
               </a>
             </div>
 
-            {/* Belfast Local Time & Understated Quote */}
-            <div className="flex items-center gap-4">
-              <span>BELFAST, UK: {belfastTime || "--:--:--"}</span>
-              <span className="text-white/20">|</span>
-              <span className="text-ink-muted/60 hidden sm:inline">
-                &ldquo;I have no enemies.&rdquo;
-              </span>
+            <div className="font-mono">
+              Belfast, UK {belfastTime ? `· ${belfastTime}` : ""}
             </div>
           </div>
         </motion.div>

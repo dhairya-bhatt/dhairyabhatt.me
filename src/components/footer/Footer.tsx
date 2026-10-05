@@ -1,159 +1,118 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Link from "next/link";
-import { siteConfig } from "@/content/site";
-import { formatTimeInBelfast } from "@/lib/utils";
-import { Github, Linkedin, Code2, ArrowUpRight } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 
 export function Footer() {
-  const [belfastTime, setBelfastTime] = useState("");
-
-  useEffect(() => {
-    setBelfastTime(formatTimeInBelfast());
-    const interval = setInterval(() => {
-      setBelfastTime(formatTimeInBelfast());
-    }, 1000);
-    return () => clearInterval(interval);
-  }, []);
-
   return (
-    <footer className="relative w-full border-t border-white/[0.08] bg-[#111113] pt-20 pb-12 px-6 md:px-16 lg:px-20 text-ink-primary">
-      <div className="max-w-6xl mx-auto">
+    <footer className="relative w-full border-t border-white/[0.08] bg-[#0E0E10] pt-16 md:pt-20 pb-12 px-8 sm:px-14 md:px-20 lg:px-28 text-ink-primary font-funnel">
+      <div className="max-w-5xl mx-auto">
         {/* Top CTA Row */}
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-10 pb-16 border-b border-white/[0.08] items-start">
-          <div className="md:col-span-7 space-y-4">
-            <span className="font-mono text-xs uppercase tracking-widest text-accent font-medium">
-              04 / GET IN TOUCH
-            </span>
-            <h2 className="font-serif text-4xl sm:text-5xl md:text-6xl text-white tracking-tight">
-              Let&apos;s build something exceptional.
+        <div className="flex flex-col md:flex-row md:items-baseline justify-between gap-6 pb-12 md:pb-16 border-b border-white/[0.08]">
+          <div className="space-y-2">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl text-white font-normal lowercase tracking-tight">
+              get in touch
             </h2>
-            <p className="font-sans text-base text-ink-muted max-w-lg font-light">
-              Interested in quantitative analysis, algorithmic challenges, or full-stack software development. Open for Summer 2027 placement and internship discussions.
+            <p className="text-ink-muted text-sm sm:text-base font-light max-w-md">
+              Available for Summer 2027 quantitative trading and software engineering placements.
             </p>
           </div>
 
-          <div className="md:col-span-5 flex flex-col md:items-end justify-between space-y-4">
-            <Link
-              href="/contact"
-              className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-white text-black font-mono text-xs uppercase tracking-wider font-semibold hover:bg-accent hover:text-white transition-all duration-300 shadow-xl group"
-            >
-              <span>SEND A MESSAGE</span>
-              <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-            </Link>
-
-            <a
-              href="mailto:dhairya@dhairyabhatt.me"
-              className="font-mono text-xs text-ink-muted hover:text-white transition-colors"
-            >
-              dhairya@dhairyabhatt.me
-            </a>
-          </div>
+          <a
+            href="mailto:dhairya@dhairyabhatt.me"
+            className="inline-flex items-center gap-2 text-white hover:text-accent transition-colors text-base sm:text-lg font-normal group pt-2"
+          >
+            <span>dhairya@dhairyabhatt.me</span>
+            <ArrowUpRight className="w-4 h-4 text-ink-muted group-hover:text-accent group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+          </a>
         </div>
 
-        {/* Middle Navigation & Socials */}
-        <div className="py-10 grid grid-cols-2 sm:grid-cols-4 gap-8 font-mono text-xs border-b border-white/[0.06]">
-          <div>
-            <span className="text-[10px] uppercase tracking-wider text-ink-muted block mb-3">
-              NAVIGATION
-            </span>
-            <ul className="space-y-2 text-ink-secondary">
-              <li><Link href="/" className="hover:text-white transition-colors">Home</Link></li>
-              <li><Link href="/#about" className="hover:text-white transition-colors">About</Link></li>
-              <li><Link href="/projects" className="hover:text-white transition-colors">Projects</Link></li>
-              <li><Link href="/contact" className="hover:text-white transition-colors">Contact</Link></li>
-            </ul>
+        {/* 3-Column Minimal Footer Directory */}
+        <div className="py-12 grid grid-cols-1 sm:grid-cols-3 gap-10 text-sm">
+          {/* Column 1: Info & Availability */}
+          <div className="space-y-2 text-ink-muted font-light">
+            <p className="text-white font-normal">Dhairya Bhatt</p>
+            <p className="text-xs text-ink-muted">Available for: Summer 2027 Placements</p>
+            <p className="text-xs text-ink-muted">Based in: Belfast, Northern Ireland</p>
           </div>
 
+          {/* Column 2: Pages */}
           <div>
-            <span className="text-[10px] uppercase tracking-wider text-ink-muted block mb-3">
-              CONNECT
+            <span className="text-xs uppercase tracking-wider text-ink-muted/70 block mb-3 font-mono">
+              pages
             </span>
-            <ul className="space-y-2 text-ink-secondary">
+            <ul className="space-y-2 text-ink-secondary text-sm">
               <li>
-                <a
-                  href={siteConfig.socials.find((s) => s.name === "GitHub")?.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-white transition-colors flex items-center gap-1.5"
-                >
-                  <Github className="w-3.5 h-3.5 text-accent" />
-                  <span>GitHub</span>
-                </a>
+                <Link href="/" className="hover:text-white transition-colors">
+                  home
+                </Link>
               </li>
               <li>
-                <a
-                  href={siteConfig.socials.find((s) => s.name === "LinkedIn")?.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-white transition-colors flex items-center gap-1.5"
-                >
-                  <Linkedin className="w-3.5 h-3.5 text-accent" />
-                  <span>LinkedIn</span>
-                </a>
+                <Link href="/#about" className="hover:text-white transition-colors">
+                  about
+                </Link>
               </li>
               <li>
-                <a
-                  href={siteConfig.socials.find((s) => s.name === "LeetCode")?.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-white transition-colors flex items-center gap-1.5"
-                >
-                  <Code2 className="w-3.5 h-3.5 text-accent" />
-                  <span>LeetCode</span>
-                </a>
+                <Link href="/projects" className="hover:text-white transition-colors">
+                  work
+                </Link>
+              </li>
+              <li>
+                <Link href="/contact" className="hover:text-white transition-colors">
+                  contact
+                </Link>
               </li>
             </ul>
           </div>
 
+          {/* Column 3: Socials */}
           <div>
-            <span className="text-[10px] uppercase tracking-wider text-ink-muted block mb-3">
-              LOCAL TELEMETRY
+            <span className="text-xs uppercase tracking-wider text-ink-muted/70 block mb-3 font-mono">
+              socials
             </span>
-            <div className="space-y-1 text-ink-secondary">
-              <div>Belfast, UK</div>
-              <div className="text-white font-semibold">
-                {belfastTime || "--:--:--"} (GMT/BST)
-              </div>
-              <div className="text-[10px] text-ink-muted/70 pt-1">Queen&apos;s University</div>
-            </div>
-          </div>
-
-          <div>
-            <span className="text-[10px] uppercase tracking-wider text-ink-muted block mb-3">
-              COLOPHON
-            </span>
-            <div className="space-y-1.5 text-ink-muted text-[11px]">
-              <div>Handcrafted with Next.js 15</div>
-              <div>TypeScript &amp; Tailwind CSS</div>
-              <div className="text-[10px] text-ink-muted/60">Deployed on Vercel</div>
-            </div>
+            <ul className="space-y-2 text-ink-secondary text-sm">
+              <li>
+                <a
+                  href="https://github.com/dhairyabhatt"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-white transition-colors inline-flex items-center gap-1 group"
+                >
+                  <span>github</span>
+                  <ArrowUpRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://linkedin.com/in/dhairya-bhatt"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-white transition-colors inline-flex items-center gap-1 group"
+                >
+                  <span>linkedin</span>
+                  <ArrowUpRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://leetcode.com/u/dhairyabhatt"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-white transition-colors inline-flex items-center gap-1 group"
+                >
+                  <span>leetcode</span>
+                  <ArrowUpRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
+                </a>
+              </li>
+            </ul>
           </div>
         </div>
 
-        {/* Bottom Status Row: Evangelion MAGI System + Better Call Saul Joke */}
-        <div className="pt-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 font-mono text-[11px] text-ink-muted">
-          {/* Evangelion MAGI Diagnostic */}
-          <div className="flex items-center gap-2">
-            <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse" />
-            <span className="text-amber-500/90 font-medium tracking-wider">
-              MAGI SYSTEM:
-            </span>
-            <span className="text-ink-muted">
-              [MELCHIOR-1: PASS] [BALTHASAR-2: PASS] [CASPER-3: PASS] // SYNC: 99.8%
-            </span>
-          </div>
-
-          {/* Better Call Saul Micro-Copy */}
-          <div className="text-ink-muted/70">
-            &ldquo;Lawyered up: no, just well-tested code.&rdquo;
-          </div>
-
-          {/* Copyright */}
-          <div className="text-ink-muted/50">
-            &copy; {new Date().getFullYear()} Dhairya Bhatt · dhairyabhatt.me
-          </div>
+        {/* Bottom Subdued Bar */}
+        <div className="pt-8 border-t border-white/[0.06] flex items-center justify-between text-xs text-ink-muted/60">
+          <p>&copy; {new Date().getFullYear()} Dhairya Bhatt. All rights reserved.</p>
+          <p className="hidden sm:block">Belfast, UK</p>
         </div>
       </div>
     </footer>

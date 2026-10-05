@@ -35,26 +35,23 @@ export default function ContactPage() {
 
       <main className="max-w-6xl mx-auto px-6 md:px-16 lg:px-20 pt-32 pb-24">
         {/* Navigation Back */}
-        <div className="mb-8">
+        <div className="mb-10">
           <Link
             href="/"
-            className="inline-flex items-center gap-2 font-mono text-xs text-ink-muted hover:text-white transition-colors"
+            className="inline-flex items-center gap-1.5 font-funnel text-xs text-ink-muted hover:text-white transition-colors"
           >
             <ArrowLeft className="w-3.5 h-3.5 text-accent" />
-            <span>RETURN HOME</span>
+            <span>back to home</span>
           </Link>
         </div>
 
         {/* Page Title */}
-        <div className="space-y-3 mb-16">
-          <span className="font-mono text-xs uppercase tracking-widest text-accent font-medium">
-            CONTACT // DIRECT CHANNELS
-          </span>
-          <h1 className="font-serif text-5xl sm:text-6xl md:text-7xl text-white tracking-tight">
-            Initiate Contact
+        <div className="space-y-2 mb-14">
+          <h1 className="font-funnel text-4xl sm:text-5xl md:text-6xl text-white tracking-tight lowercase">
+            get in touch
           </h1>
-          <p className="font-sans text-base md:text-lg text-ink-secondary/90 max-w-2xl font-light">
-            Whether inquiring about Summer 2027 quantitative trading internships, software engineering roles, or collaborative projects, I look forward to hearing from you.
+          <p className="font-funnel text-sm sm:text-base text-ink-muted max-w-xl font-light">
+            Open for Summer 2027 quantitative trading placements, software engineering roles, and technical discussions.
           </p>
         </div>
 
