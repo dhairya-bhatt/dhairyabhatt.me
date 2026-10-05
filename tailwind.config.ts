@@ -36,7 +36,7 @@ const config: Config = {
         parchment: "#F5F2EB",
       },
       fontFamily: {
-        century: ["Century", "Century Schoolbook", "TeX Gyre Schola", "Georgia", "serif"],
+        century: ["Century", "Century Schoolbook", "'Century Offline'", "TeX Gyre Schola", "Georgia", "serif"],
         helvetica: ["Helvetica Neue", "Helvetica", "Arial", "sans-serif"],
         funnel: ["'Funnel Sans'", "-apple-system", "BlinkMacSystemFont", "sans-serif"],
         serif: ["Century", "Century Schoolbook", "TeX Gyre Schola", "Georgia", "serif"],
