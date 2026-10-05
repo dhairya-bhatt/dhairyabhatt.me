@@ -42,6 +42,11 @@ const config: Config = {
         serif: ["Century", "Century Schoolbook", "TeX Gyre Schola", "Georgia", "serif"],
         sans: ["'Funnel Sans'", "Inter", "-apple-system", "BlinkMacSystemFont", "sans-serif"],
         mono: ["var(--font-geist-mono)", "Courier New", "monospace"],
+        pokemon: ["'Press Start 2P'", "monospace"],
+        onepiece: ["'Pirata One'", "cursive", "serif"],
+        evangelion: ["'Bodoni Moda'", "Century", "Georgia", "serif"],
+        bleach: ["'Rubik Glitch'", "Impact", "sans-serif"],
+        aot: ["'Cinzel'", "'Bebas Neue'", "serif"],
       },
       animation: {
         "marquee": "marquee 32s linear infinite",

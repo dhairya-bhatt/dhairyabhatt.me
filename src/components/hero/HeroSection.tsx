@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { GrainyName } from "./GrainyName";
+import { FontShiftName } from "./FontShiftName";
 
 export function HeroSection() {
   return (
@@ -20,9 +20,9 @@ export function HeroSection() {
           </span>
         </div>
 
-        {/* Name in Century bold with interactive grain assembly */}
-        <div className="mb-3 md:mb-4 max-w-4xl min-h-[64px] sm:min-h-[85px] md:min-h-[110px] flex items-center">
-          <GrainyName />
+        {/* Dynamic Anime Font Shifting Title */}
+        <div className="mb-3 md:mb-4 max-w-4xl min-h-[80px] sm:min-h-[105px] md:min-h-[130px] flex items-center">
+          <FontShiftName />
         </div>
 
         {/* Subtitle in Helvetica medium-grey matching reference image */}
