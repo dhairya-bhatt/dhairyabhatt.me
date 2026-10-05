@@ -3,37 +3,44 @@
 import React, { useRef, useEffect, useState, useCallback } from "react";
 import { siteConfig } from "@/content/site";
 
-interface GrainParticle {
-  ox: number; // Origin X (clean text position)
-  oy: number; // Origin Y
+interface Grain {
+  ox: number; // Clean target X
+  oy: number; // Clean target Y
   x: number;  // Current X
   y: number;  // Current Y
-  sx: number; // Scatter target X (dust cloud)
-  sy: number; // Scatter target Y
-  vx: number;
-  vy: number;
+  sx: number; // Dispersed/scattered X
+  sy: number; // Dispersed/scattered Y
   size: number;
   alpha: number;
+  driftAngle: number;
+  driftSpeed: number;
 }
 
 export function GrainyName() {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
   const [isClean, setIsClean] = useState(false);
-  const particlesRef = useRef<GrainParticle[]>([]);
-  const animFrameRef = useRef<number | null>(null);
-  const isCleanRef = useRef(false);
+  const [isReady, setIsReady] = useState(false);
 
+  const grainsRef = useRef<Grain[]>([]);
+  const animRef = useRef<number | null>(null);
+  const isCleanRef = useRef(false);
   isCleanRef.current = isClean;
 
-  const initParticles = useCallback(() => {
-    const canvas = canvasRef.current;
-    const container = containerRef.current;
-    if (!canvas || !container) return;
+  const mousePosRef = useRef<{ x: number; y: number; active: boolean }>({
+    x: -1000,
+    y: -1000,
+    active: false,
+  });
 
-    const width = container.clientWidth;
-    // Calculate font size responsive to width
-    const fontSize = Math.min(Math.max(width * 0.12, 42), 116);
+  const sampleGlyphs = useCallback(() => {
+    const container = containerRef.current;
+    const canvas = canvasRef.current;
+    if (!container || !canvas) return;
+
+    const width = container.clientWidth || 600;
+    // Calculate responsive font size
+    const fontSize = Math.min(Math.max(width * 0.115, 38), 108);
     const height = Math.round(fontSize * 1.35);
 
     const dpr = typeof window !== "undefined" ? Math.min(window.devicePixelRatio || 1, 2) : 1;
@@ -42,74 +49,81 @@ export function GrainyName() {
     canvas.style.width = `${width}px`;
     canvas.style.height = `${height}px`;
 
-    const ctx = canvas.getContext("2d");
+    const ctx = canvas.getContext("2d", { willReadFrequently: true });
     if (!ctx) return;
 
     ctx.scale(dpr, dpr);
-
-    // Render offscreen text to sample pixels
     ctx.clearRect(0, 0, width, height);
+
+    // Try resolving Instrument Serif from CSS or fallback to Georgia, serif
     ctx.fillStyle = "#FFFFFF";
-    // Use the Instrument Serif or Georgia serif font
-    ctx.font = `400 ${fontSize}px var(--font-instrument-serif), Georgia, serif`;
+    ctx.font = `400 ${fontSize}px "Instrument Serif", Georgia, serif`;
     ctx.textBaseline = "middle";
     ctx.textAlign = "left";
     ctx.fillText(siteConfig.name, 4, height / 2);
 
     const imgData = ctx.getImageData(0, 0, width * dpr, height * dpr);
     const data = imgData.data;
-    const newParticles: GrainParticle[] = [];
+    const grains: Grain[] = [];
 
-    // Sample step for grain density
-    const step = Math.max(Math.round(2 * dpr), 2);
+    // Sample grain particles along text contours
+    const step = Math.max(Math.round(2.5 * dpr), 2);
 
     for (let py = 0; py < height * dpr; py += step) {
       for (let px = 0; px < width * dpr; px += step) {
-        const index = (py * (width * dpr) + px) * 4;
-        const alpha = data[index + 3];
+        const idx = (py * (width * dpr) + px) * 4;
+        const alpha = data[idx + 3];
 
-        if (alpha > 70) {
+        if (alpha > 55) {
           const originX = px / dpr;
           const originY = py / dpr;
 
-          // Scatter radius for fine grain cloud (pieces of grains floating outward)
+          // Dispersal cloud: fine sand grains sprayed around each letter
           const angle = Math.random() * Math.PI * 2;
-          const dist = 6 + Math.random() * 24;
-          const scatterX = originX + Math.cos(angle) * dist + (Math.random() - 0.5) * 10;
-          const scatterY = originY + Math.sin(angle) * dist + (Math.random() - 0.5) * 10;
+          const radius = 4 + Math.random() * 22;
+          const scatterX = originX + Math.cos(angle) * radius + (Math.random() - 0.5) * 8;
+          const scatterY = originY + Math.sin(angle) * radius + (Math.random() - 0.5) * 8;
 
-          newParticles.push({
+          grains.push({
             ox: originX,
             oy: originY,
             x: scatterX,
             y: scatterY,
             sx: scatterX,
             sy: scatterY,
-            vx: 0,
-            vy: 0,
-            size: 0.9 + Math.random() * 1.3,
-            alpha: 0.5 + Math.random() * 0.5,
+            size: 0.9 + Math.random() * 1.4,
+            alpha: 0.45 + Math.random() * 0.55,
+            driftAngle: Math.random() * Math.PI * 2,
+            driftSpeed: 0.02 + Math.random() * 0.04,
           });
         }
       }
     }
 
-    particlesRef.current = newParticles;
+    grainsRef.current = grains;
     ctx.clearRect(0, 0, width, height);
+    setIsReady(true);
   }, []);
 
   useEffect(() => {
-    initParticles();
+    // Wait for web fonts if available, then sample
+    if (typeof document !== "undefined" && document.fonts) {
+      document.fonts.ready.then(() => {
+        sampleGlyphs();
+      });
+    } else {
+      sampleGlyphs();
+    }
 
     const handleResize = () => {
-      initParticles();
+      sampleGlyphs();
     };
 
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
-  }, [initParticles]);
+  }, [sampleGlyphs]);
 
-  // Main animation loop: grains assemble when clean, scatter into dusty grains when idle
+  // Main animation render loop
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -118,12 +132,7 @@ export function GrainyName() {
 
     const dpr = typeof window !== "undefined" ? Math.min(window.devicePixelRatio || 1, 2) : 1;
 
-    let lastTime = performance.now();
-
-    const render = (time: number) => {
-      const dt = Math.min((time - lastTime) / 1000, 0.1);
-      lastTime = time;
-
+    const render = () => {
       const width = canvas.width / dpr;
       const height = canvas.height / dpr;
 
@@ -132,61 +141,105 @@ export function GrainyName() {
       ctx.clearRect(0, 0, width, height);
 
       const clean = isCleanRef.current;
-      const particles = particlesRef.current;
-      const len = particles.length;
+      const grains = grainsRef.current;
+      const len = grains.length;
+      const mouse = mousePosRef.current;
 
-      // When clean: pull swiftly into exact solid letter shapes
-      // When idle: float gently in the grainy scattered state
-      const ease = clean ? 0.18 : 0.08;
+      // When clean: pull smoothly into clean letter targets
+      // When idle: float in the scattered grain cloud
+      const ease = clean ? 0.22 : 0.08;
 
       for (let i = 0; i < len; i++) {
-        const p = particles[i];
-        const targetX = clean ? p.ox : p.sx;
-        const targetY = clean ? p.oy : p.sy;
+        const g = grains[i];
+        let targetX = clean ? g.ox : g.sx;
+        let targetY = clean ? g.oy : g.sy;
 
-        p.x += (targetX - p.x) * ease;
-        p.y += (targetY - p.y) * ease;
-
-        // Subtle ambient grain shimmer when scattered
-        if (!clean && i % 3 === 0) {
-          p.x += (Math.random() - 0.5) * 0.4;
-          p.y += (Math.random() - 0.5) * 0.4;
+        // Subtle Brownian grain drift when idle
+        if (!clean) {
+          g.driftAngle += g.driftSpeed;
+          targetX += Math.cos(g.driftAngle) * 1.2;
+          targetY += Math.sin(g.driftAngle) * 1.2;
         }
+
+        // Mouse kinetic repulsion on grains when nearby
+        if (mouse.active) {
+          const dx = g.x - mouse.x;
+          const dy = g.y - mouse.y;
+          const distSq = dx * dx + dy * dy;
+          if (distSq < 3600 && distSq > 1) { // 60px radius
+            const dist = Math.sqrt(distSq);
+            const force = (1 - dist / 60) * 12;
+            g.x += (dx / dist) * force;
+            g.y += (dy / dist) * force;
+          }
+        }
+
+        g.x += (targetX - g.x) * ease;
+        g.y += (targetY - g.y) * ease;
 
         ctx.fillStyle = clean
           ? "#FFFFFF"
-          : `rgba(240, 240, 245, ${p.alpha * 0.85})`;
+          : `rgba(245, 245, 250, ${g.alpha * 0.9})`;
 
-        ctx.fillRect(p.x, p.y, p.size, p.size);
+        ctx.fillRect(g.x, g.y, g.size, g.size);
       }
 
       ctx.restore();
-      animFrameRef.current = requestAnimationFrame(render);
+      animRef.current = requestAnimationFrame(render);
     };
 
-    animFrameRef.current = requestAnimationFrame(render);
+    animRef.current = requestAnimationFrame(render);
 
     return () => {
-      if (animFrameRef.current) cancelAnimationFrame(animFrameRef.current);
+      if (animRef.current) cancelAnimationFrame(animRef.current);
     };
   }, []);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!canvasRef.current) return;
+    const rect = canvasRef.current.getBoundingClientRect();
+    mousePosRef.current = {
+      x: e.clientX - rect.left,
+      y: e.clientY - rect.top,
+      active: true,
+    };
+  };
+
+  const handleMouseLeave = () => {
+    mousePosRef.current.active = false;
+    setIsClean(false);
+  };
 
   return (
     <div
       ref={containerRef}
-      className="relative w-full cursor-pointer select-none py-1"
       onMouseEnter={() => setIsClean(true)}
-      onMouseLeave={() => setIsClean(false)}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
       onTouchStart={() => setIsClean((prev) => !prev)}
-      title="Dhairya Bhatt (Hover or tap: grains assemble)"
+      className="relative w-full cursor-pointer select-none py-1 group"
+      title="Dhairya Bhatt — Hover to assemble grains into solid text"
     >
-      {/* Real accessible HTML heading for SEO & Screen Readers */}
+      {/* Accessible semantic heading for screen readers & SEO */}
       <h1 className="sr-only">{siteConfig.name}</h1>
 
-      {/* Interactive Grain Particles Canvas */}
+      {/* Clean vector text layer: smoothly fades in when grains lock into place */}
+      <div
+        className={`absolute inset-0 pointer-events-none font-serif text-5xl sm:text-7xl md:text-8xl lg:text-9xl text-white font-normal leading-none tracking-tight transition-opacity duration-500 ${
+          isClean ? "opacity-100" : "opacity-0"
+        }`}
+        style={{ transform: "translateY(14%)" }}
+        aria-hidden="true"
+      >
+        {siteConfig.name}
+      </div>
+
+      {/* Active grain particles canvas */}
       <canvas
         ref={canvasRef}
-        className="block pointer-events-auto transition-transform duration-300"
+        className={`block pointer-events-none transition-opacity duration-300 ${
+          isReady ? "opacity-100" : "opacity-0"
+        }`}
         aria-hidden="true"
       />
     </div>

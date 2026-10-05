@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { siteConfig } from "@/content/site";
 import { formatTimeInBelfast } from "@/lib/utils";
-import { Github, Linkedin, Code2, Mail, ArrowUpRight } from "lucide-react";
+import { Github, Linkedin, Code2, ArrowUpRight } from "lucide-react";
 
 export function Footer() {
   const [belfastTime, setBelfastTime] = useState("");
@@ -122,20 +122,12 @@ export function Footer() {
 
           <div>
             <span className="text-[10px] uppercase tracking-wider text-ink-muted block mb-3">
-              EASTER EGGS
+              COLOPHON
             </span>
             <div className="space-y-1.5 text-ink-muted text-[11px]">
-              <div>Try the Konami code:</div>
-              <div className="text-[10px] font-semibold text-accent">
-                ↑ ↑ ↓ ↓ ← → ← → B A
-              </div>
-              {/* Bleach Zanpakutō Icon */}
-              <div className="flex items-center gap-1.5 pt-1 text-ink-muted/60">
-                <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24" aria-hidden="true">
-                  <path d="M 2 22 L 12 12 M 12 12 L 16 8 M 16 8 L 22 2 M 11 13 L 13 11 M 15 9 L 14 10" stroke="currentColor" strokeWidth="2" />
-                </svg>
-                <span>Bleach Zanpakutō motif</span>
-              </div>
+              <div>Handcrafted with Next.js 15</div>
+              <div>TypeScript &amp; Tailwind CSS</div>
+              <div className="text-[10px] text-ink-muted/60">Deployed on Vercel</div>
             </div>
           </div>
         </div>

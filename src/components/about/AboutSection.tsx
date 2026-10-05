@@ -3,22 +3,23 @@
 import React from "react";
 import Image from "next/image";
 import { MarqueeStrip } from "./MarqueeStrip";
-import { ScatteredGallery } from "./ScatteredGallery";
+import { InteractiveMusicPlayer } from "./InteractiveMusicPlayer";
+import { PhotoCollage } from "./PhotoCollage";
 import { portraitPhoto } from "@/content/photos";
 
 export function AboutSection() {
   return (
-    <section id="about" className="relative w-full pt-12 pb-24 overflow-hidden">
+    <section id="about" className="relative w-full pt-6 pb-20 overflow-hidden">
       {/* 1. Big Marquee Strip matching Figma */}
-      <div className="w-full mb-16 md:mb-24">
+      <div className="w-full mb-14 md:mb-20">
         <MarqueeStrip text="ABOUT ME · ABOUT ME · ABOUT ME · ABOUT ME · " />
       </div>
 
-      {/* 2. Main Bio & Portrait Row matching Figma */}
       <div className="max-w-6xl mx-auto px-6 md:px-16 lg:px-20">
+        {/* 2. Main Bio & Portrait Row matching Figma */}
         <div className="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-14 items-center">
           {/* Left Column: Bio Text */}
-          <div className="md:col-span-7 space-y-6">
+          <div className="md:col-span-7 space-y-5">
             <p className="font-sans text-base sm:text-lg md:text-xl text-ink-secondary leading-relaxed font-light">
               Hello! I&apos;m Dhairya Bhatt and currently studying Mathematics and Computer Science at Queen&apos;s University Belfast. My journey has been shaped by a deep-seated passion for both computers and mathematics. These interests have not only influenced my academic pursuits but have also led me to explore various innovative projects and initiatives.
             </p>
@@ -56,12 +57,29 @@ export function AboutSection() {
           </div>
         </div>
 
-        {/* 3. Scattered Personal Photo Gallery with Per-Photo Effects */}
-        <ScatteredGallery />
+        {/* 3. Curated Small Space for Fun Things (Music Player & Photo Collage) */}
+        <div className="mt-16 md:mt-20 pt-10 border-t border-white/[0.08]">
+          <div className="flex items-center justify-between mb-8 font-mono text-xs text-ink-muted">
+            <span className="uppercase tracking-widest text-[11px] text-ink-secondary">
+              [ PLAYGROUND &amp; EPHEMERA ]
+            </span>
+            <span className="hidden sm:inline text-ink-muted/60">
+              AUDIO &amp; CASUAL ARCHIVES
+            </span>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
+            {/* Left: Interactive Turntable / Music Player */}
+            <InteractiveMusicPlayer />
+
+            {/* Right: Scattered Photo Collage */}
+            <PhotoCollage />
+          </div>
+        </div>
 
         {/* 4. Understated Vinland Saga Quote */}
-        <div className="mt-20 pt-8 border-t border-white/[0.06] text-center">
-          <p className="font-serif italic text-base md:text-lg text-ink-muted/60 hover:text-ink-secondary transition-colors inline-block cursor-default">
+        <div className="mt-16 pt-8 border-t border-white/[0.06] text-center">
+          <p className="font-serif italic text-base md:text-lg text-ink-muted/50 hover:text-ink-secondary transition-colors inline-block cursor-default">
             &ldquo;I have no enemies.&rdquo;
           </p>
         </div>

@@ -127,23 +127,23 @@ export function MenuOverlay({ isOpen, onClose }: MenuOverlayProps) {
             aria-hidden="true"
           />
 
-          {/* Top Bar Header with 'Who's That Pokémon?' pun header and prominent Close Button */}
+          {/* Top Bar Header with subtle Pokedex Archive header and prominent Close Button */}
           <div className="relative z-20 flex items-start justify-between">
             <div className="space-y-1">
               <div className="flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
-                <span className="font-mono text-xs tracking-wider uppercase text-accent font-semibold">
-                  WHO&apos;S THAT POKÉMON?
+                <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
+                <span className="font-mono text-xs tracking-widest uppercase text-ink-muted font-medium">
+                  POKÉDEX ARCHIVE
                 </span>
               </div>
               <motion.p
                 key={hoveredItem ? hoveredItem.label : "default"}
-                initial={{ opacity: 0, y: 4 }}
+                initial={{ opacity: 0, y: 3 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.2 }}
-                className="font-serif italic text-lg md:text-xl text-ink-secondary"
+                transition={{ duration: 0.15 }}
+                className="font-serif italic text-base md:text-lg text-ink-secondary"
               >
-                {hoveredItem ? `It's… ${hoveredItem.pokemonCallout}` : "It's… EXPLORATION TIME!"}
+                {hoveredItem ? `It's… ${hoveredItem.pokemonCallout}` : "Select a destination"}
               </motion.p>
             </div>
 
@@ -151,10 +151,10 @@ export function MenuOverlay({ isOpen, onClose }: MenuOverlayProps) {
             <button
               onClick={onClose}
               aria-label="Close navigation menu"
-              className="w-12 h-12 rounded-full bg-[#1F1F23] border border-white/20 flex items-center justify-center text-white hover:bg-accent hover:border-accent transition-all duration-200 shadow-xl focus:outline-none cursor-pointer"
+              className="w-12 h-12 rounded-full bg-[#18181B] border border-white/20 flex items-center justify-center text-white hover:bg-accent hover:border-accent transition-all duration-200 shadow-xl focus:outline-none cursor-pointer group"
             >
               <svg
-                className="w-6 h-6 text-white"
+                className="w-5 h-5 text-white group-hover:scale-110 transition-transform"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -181,7 +181,7 @@ export function MenuOverlay({ isOpen, onClose }: MenuOverlayProps) {
                       <Link
                         href={item.href}
                         onClick={onClose}
-                        className="flex flex-col md:flex-row md:items-baseline gap-2 md:gap-8 group focus:outline-none"
+                        className="flex flex-col md:flex-row md:items-baseline gap-2 md:gap-8 focus:outline-none"
                       >
                         <span className="font-mono text-xs md:text-sm text-ink-muted group-hover:text-accent transition-colors">
                           {item.number}
@@ -191,21 +191,21 @@ export function MenuOverlay({ isOpen, onClose }: MenuOverlayProps) {
                           <span
                             className={`font-serif text-4xl sm:text-6xl md:text-7xl lg:text-8xl tracking-tight transition-all duration-300 ${
                               isHovered
-                                ? "text-white translate-x-3 italic"
+                                ? "text-white tracking-wide"
                                 : "text-ink-secondary group-hover:text-white"
                             }`}
                           >
                             {item.label}
                           </span>
                           <ArrowUpRight
-                            className={`w-6 h-6 md:w-8 md:h-8 text-accent transition-all duration-300 opacity-0 -translate-x-2 ${
-                              isHovered ? "opacity-100 translate-x-0" : ""
+                            className={`w-6 h-6 md:w-8 md:h-8 text-accent transition-all duration-250 ${
+                              isHovered ? "opacity-100 translate-x-1 -translate-y-1" : "opacity-0 -translate-x-1 translate-y-1"
                             }`}
                           />
                         </div>
 
-                        <span className="font-sans text-xs md:text-sm text-ink-muted/80 hidden lg:block opacity-0 group-hover:opacity-100 transition-opacity">
-                          {item.description}
+                        <span className="font-mono text-[11px] text-ink-muted hidden lg:block opacity-0 group-hover:opacity-100 transition-opacity uppercase tracking-wider">
+                          // {item.description}
                         </span>
                       </Link>
                     </li>

@@ -7,7 +7,7 @@ export function HeroSection() {
   return (
     <section
       id="home"
-      className="relative min-h-[85vh] md:min-h-screen flex flex-col justify-center px-6 md:px-16 lg:px-24 pt-28 pb-16"
+      className="relative flex flex-col justify-center px-6 md:px-16 lg:px-24 pt-28 md:pt-36 pb-16 md:pb-24"
     >
       <div className="max-w-5xl">
         {/* "THE PORTFOLIO OF" Editorial Serif Overline matching Figma */}

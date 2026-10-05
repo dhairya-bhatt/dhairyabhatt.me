@@ -3,52 +3,54 @@
 import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-const KONAMI_CODE = [
-  "ArrowUp",
-  "ArrowUp",
-  "ArrowDown",
-  "ArrowDown",
-  "ArrowLeft",
-  "ArrowRight",
-  "ArrowLeft",
-  "ArrowRight",
-  "b",
-  "a",
-];
+const TARGET_KEYWORD = "bankai";
 
 export function KonamiListener() {
-  const [inputSequence, setInputSequence] = useState<string[]>([]);
+  const [typedBuffer, setTypedBuffer] = useState("");
   const [isBankaiActive, setIsBankaiActive] = useState(false);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      const key = e.key;
+      // Ignore if user is currently typing in an input, textarea, or contentEditable
+      const target = e.target as HTMLElement | null;
+      if (
+        target &&
+        (target.tagName === "INPUT" ||
+          target.tagName === "TEXTAREA" ||
+          target.isContentEditable)
+      ) {
+        return;
+      }
 
-      setInputSequence((prev) => {
-        const next = [...prev, key].slice(-KONAMI_CODE.length);
+      // Only track alphabetic keys
+      if (e.key.length === 1 && /[a-zA-Z]/.test(e.key)) {
+        setTypedBuffer((prev) => {
+          const next = (prev + e.key.toLowerCase()).slice(-TARGET_KEYWORD.length);
 
-        // Check if matches Konami code
-        const isMatch = KONAMI_CODE.every(
-          (val, index) => val.toLowerCase() === (next[index] || "").toLowerCase()
-        );
+          if (next === TARGET_KEYWORD) {
+            setIsBankaiActive(true);
 
-        if (isMatch) {
-          setIsBankaiActive(true);
-          // Apply black/white inversion flash to body
-          document.documentElement.style.filter = "invert(1) hue-rotate(180deg)";
-          setTimeout(() => {
-            document.documentElement.style.filter = "none";
-          }, 350);
+            // High-contrast monochromatic flash
+            document.documentElement.style.transition = "filter 0.15s ease-out";
+            document.documentElement.style.filter = "invert(1) contrast(150%)";
 
-          setTimeout(() => {
-            setIsBankaiActive(false);
-          }, 2400);
+            setTimeout(() => {
+              document.documentElement.style.filter = "none";
+              setTimeout(() => {
+                document.documentElement.style.transition = "";
+              }, 300);
+            }, 380);
 
-          return [];
-        }
+            setTimeout(() => {
+              setIsBankaiActive(false);
+            }, 2500);
 
-        return next;
-      });
+            return "";
+          }
+
+          return next;
+        });
+      }
     };
 
     window.addEventListener("keydown", handleKeyDown);
@@ -59,20 +61,20 @@ export function KonamiListener() {
     <AnimatePresence>
       {isBankaiActive && (
         <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
+          initial={{ opacity: 0, scale: 0.85 }}
           animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0, scale: 1.1 }}
-          transition={{ duration: 0.2 }}
-          className="fixed inset-0 z-[120] pointer-events-none flex items-center justify-center bg-black/80 backdrop-blur-md"
+          exit={{ opacity: 0, scale: 1.05 }}
+          transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+          className="fixed inset-0 z-[120] pointer-events-none flex items-center justify-center bg-black/85 backdrop-blur-md"
         >
-          <div className="text-center space-y-3 p-8 border border-white/30 bg-black/90 rounded-2xl shadow-2xl max-w-md">
-            <span className="font-mono text-xs uppercase tracking-widest text-accent font-semibold block">
-              EASTER EGG UNLOCKED // BLEACH
+          <div className="text-center space-y-3 p-8 border border-white/20 bg-black/95 rounded-2xl shadow-2xl max-w-md">
+            <span className="font-mono text-[11px] uppercase tracking-widest text-accent font-semibold block">
+              SECRET REVEALED // BLEACH
             </span>
-            <h2 className="font-serif text-5xl md:text-6xl text-white tracking-widest uppercase">
+            <h2 className="font-serif text-5xl md:text-6xl text-white tracking-widest uppercase font-normal">
               卍解 · BANKAI
             </h2>
-            <p className="font-mono text-xs text-ink-muted">
+            <p className="font-serif italic text-sm text-ink-muted">
               &ldquo;All things in the universe, turn to ashes.&rdquo;
             </p>
           </div>
