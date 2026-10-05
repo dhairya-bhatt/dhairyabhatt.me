@@ -21,7 +21,7 @@ export function HeroSection() {
         </div>
 
         {/* Name in Century bold with interactive grain assembly */}
-        <div className="mb-3 md:mb-4 max-w-4xl">
+        <div className="mb-3 md:mb-4 max-w-4xl min-h-[64px] sm:min-h-[85px] md:min-h-[110px] flex items-center">
           <GrainyName />
         </div>
 

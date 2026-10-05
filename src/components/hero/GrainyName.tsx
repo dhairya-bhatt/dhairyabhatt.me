@@ -4,29 +4,33 @@ import React, { useRef, useEffect, useState, useCallback } from "react";
 import { siteConfig } from "@/content/site";
 
 interface Grain {
-  ox: number; // Clean target X
-  oy: number; // Clean target Y
+  ox: number; // Exact solid target coordinate X
+  oy: number; // Exact solid target coordinate Y
+  sx: number; // Dispersed / scattered coordinate X
+  sy: number; // Dispersed / scattered coordinate Y
   x: number;  // Current X
   y: number;  // Current Y
-  sx: number; // Dispersed/scattered X
-  sy: number; // Dispersed/scattered Y
+  vx: number; // Velocity X
+  vy: number; // Velocity Y
   size: number;
   alpha: number;
-  driftAngle: number;
-  driftSpeed: number;
+  noiseOffset: number;
 }
 
 export function GrainyName() {
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [isClean, setIsClean] = useState(false);
+  const offscreenCanvasRef = useRef<HTMLCanvasElement | null>(null);
+
+  const [isHovered, setIsHovered] = useState(false);
   const [isReady, setIsReady] = useState(false);
 
   const grainsRef = useRef<Grain[]>([]);
   const animRef = useRef<number | null>(null);
-  const isCleanRef = useRef(false);
-  isCleanRef.current = isClean;
+  const isHoveredRef = useRef(false);
+  isHoveredRef.current = isHovered;
 
+  const factorRef = useRef(0); // 0 = fully scattered grains, 1 = fully assembled text
   const mousePosRef = useRef<{ x: number; y: number; active: boolean }>({
     x: -1000,
     y: -1000,
@@ -38,74 +42,85 @@ export function GrainyName() {
     const canvas = canvasRef.current;
     if (!container || !canvas) return;
 
-    const width = container.clientWidth || 700;
-    // Calculate responsive font size matching the reference screenshot
-    const fontSize = Math.min(Math.max(width * 0.12, 42), 104);
-    const height = Math.round(fontSize * 1.3);
+    const width = container.clientWidth || (typeof window !== "undefined" ? Math.min(window.innerWidth - 64, 850) : 750);
+    // Responsive font size tuned to match reference
+    const fontSize = Math.min(Math.max(width * 0.115, 44), 98);
+    const height = Math.round(fontSize * 1.35);
 
     const dpr = typeof window !== "undefined" ? Math.min(window.devicePixelRatio || 1, 2) : 1;
-    canvas.width = width * dpr;
-    canvas.height = height * dpr;
+
+    canvas.width = Math.round(width * dpr);
+    canvas.height = Math.round(height * dpr);
     canvas.style.width = `${width}px`;
     canvas.style.height = `${height}px`;
 
-    const ctx = canvas.getContext("2d", { willReadFrequently: true });
-    if (!ctx) return;
+    // Create offscreen buffer to rasterize the text
+    const offscreen = document.createElement("canvas");
+    offscreen.width = Math.round(width * dpr);
+    offscreen.height = Math.round(height * dpr);
+    const offCtx = offscreen.getContext("2d", { willReadFrequently: true });
+    if (!offCtx) return;
 
-    ctx.scale(dpr, dpr);
-    ctx.clearRect(0, 0, width, height);
+    offCtx.scale(dpr, dpr);
+    offCtx.fillStyle = "#FFFFFF";
+    offCtx.font = `700 ${fontSize}px Century, "Century Schoolbook", "TeX Gyre Schola", Georgia, serif`;
+    offCtx.textBaseline = "middle";
+    offCtx.textAlign = "left";
+    offCtx.fillText(siteConfig.name, 4, height / 2);
 
-    // Render using Century bold font matching user's spec
-    ctx.fillStyle = "#FFFFFF";
-    ctx.font = `700 ${fontSize}px Century, "Century Schoolbook", "TeX Gyre Schola", Georgia, serif`;
-    ctx.textBaseline = "middle";
-    ctx.textAlign = "left";
-    ctx.fillText(siteConfig.name, 2, height / 2);
+    offscreenCanvasRef.current = offscreen;
 
-    const imgData = ctx.getImageData(0, 0, width * dpr, height * dpr);
+    // Sample pixels from offscreen canvas
+    const imgData = offCtx.getImageData(0, 0, Math.round(width * dpr), Math.round(height * dpr));
     const data = imgData.data;
+    const totalW = Math.round(width * dpr);
+    const totalH = Math.round(height * dpr);
+
     const grains: Grain[] = [];
+    // Fine-grained sampling step for dense, tactile sand look
+    const step = Math.max(Math.round(1.8 * dpr), 2);
 
-    // Fine stippled sampling
-    const step = Math.max(Math.round(2 * dpr), 2);
-
-    for (let py = 0; py < height * dpr; py += step) {
-      for (let px = 0; px < width * dpr; px += step) {
-        const idx = (py * (width * dpr) + px) * 4;
+    for (let py = 0; py < totalH; py += step) {
+      for (let px = 0; px < totalW; px += step) {
+        const idx = (py * totalW + px) * 4;
         const alpha = data[idx + 3];
 
-        if (alpha > 60) {
-          const originX = px / dpr;
-          const originY = py / dpr;
+        if (alpha > 70) {
+          const ox = px / dpr;
+          const oy = py / dpr;
 
-          // Dispersal cloud: fine sand grains sprayed around each letter
+          // Dispersed position: scattered outward like fine grains of sand
           const angle = Math.random() * Math.PI * 2;
-          const radius = 5 + Math.random() * 22;
-          const scatterX = originX + Math.cos(angle) * radius + (Math.random() - 0.5) * 6;
-          const scatterY = originY + Math.sin(angle) * radius + (Math.random() - 0.5) * 6;
+          const radius = 6 + Math.random() * 24;
+          const sx = ox + Math.cos(angle) * radius + (Math.random() - 0.5) * 6;
+          const sy = oy + Math.sin(angle) * radius + (Math.random() - 0.5) * 6;
 
           grains.push({
-            ox: originX,
-            oy: originY,
-            x: scatterX,
-            y: scatterY,
-            sx: scatterX,
-            sy: scatterY,
-            size: 0.9 + Math.random() * 1.3,
-            alpha: 0.5 + Math.random() * 0.5,
-            driftAngle: Math.random() * Math.PI * 2,
-            driftSpeed: 0.02 + Math.random() * 0.035,
+            ox,
+            oy,
+            sx,
+            sy,
+            x: sx,
+            y: sy,
+            vx: 0,
+            vy: 0,
+            size: 1.1 + Math.random() * 1.3,
+            alpha: 0.55 + Math.random() * 0.45,
+            noiseOffset: Math.random() * Math.PI * 2,
           });
         }
       }
     }
 
     grainsRef.current = grains;
-    ctx.clearRect(0, 0, width, height);
     setIsReady(true);
   }, []);
 
+  // Initialize and observe container resizing
   useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
     if (typeof document !== "undefined" && document.fonts) {
       document.fonts.ready.then(() => {
         sampleGlyphs();
@@ -114,24 +129,25 @@ export function GrainyName() {
       sampleGlyphs();
     }
 
-    const handleResize = () => {
+    const ro = new ResizeObserver(() => {
       sampleGlyphs();
-    };
+    });
+    ro.observe(container);
 
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+    return () => ro.disconnect();
   }, [sampleGlyphs]);
 
-  // Main animation render loop
+  // Main 60fps physics & render loop
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    const dpr = typeof window !== "undefined" ? Math.min(window.devicePixelRatio || 1, 2) : 1;
+    let startTime = performance.now();
 
-    const render = () => {
+    const render = (time: number) => {
+      const dpr = typeof window !== "undefined" ? Math.min(window.devicePixelRatio || 1, 2) : 1;
       const width = canvas.width / dpr;
       const height = canvas.height / dpr;
 
@@ -139,46 +155,70 @@ export function GrainyName() {
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       ctx.clearRect(0, 0, width, height);
 
-      const clean = isCleanRef.current;
+      const isHoveredNow = isHoveredRef.current;
+      const targetFactor = isHoveredNow ? 1.0 : 0.0;
+      // Smooth spring interpolation for assembly factor
+      factorRef.current += (targetFactor - factorRef.current) * (isHoveredNow ? 0.16 : 0.09);
+      const factor = factorRef.current;
+
       const grains = grainsRef.current;
       const len = grains.length;
       const mouse = mousePosRef.current;
-
-      const ease = clean ? 0.22 : 0.08;
+      const elapsed = (time - startTime) * 0.001;
 
       for (let i = 0; i < len; i++) {
         const g = grains[i];
-        let targetX = clean ? g.ox : g.sx;
-        let targetY = clean ? g.oy : g.sy;
 
-        // Subtle Brownian grain drift when idle
-        if (!clean) {
-          g.driftAngle += g.driftSpeed;
-          targetX += Math.cos(g.driftAngle) * 0.8;
-          targetY += Math.sin(g.driftAngle) * 0.8;
+        // Position blends smoothly between scattered (sx, sy) and solid letter (ox, oy)
+        let tx = g.sx + (g.ox - g.sx) * factor;
+        let ty = g.sy + (g.oy - g.sy) * factor;
+
+        // When scattered, add subtle organic floating shimmer
+        if (factor < 0.98) {
+          const driftStrength = (1 - factor) * 2.5;
+          tx += Math.cos(g.noiseOffset + elapsed * 1.8) * driftStrength;
+          ty += Math.sin(g.noiseOffset + elapsed * 1.8) * driftStrength;
         }
 
-        // Mouse kinetic deflection
-        if (mouse.active) {
-          const dx = g.x - mouse.x;
-          const dy = g.y - mouse.y;
+        // Magnetic cursor pull when hovering near the text
+        if (mouse.active && isHoveredNow) {
+          const dx = mouse.x - g.ox;
+          const dy = mouse.y - g.oy;
           const distSq = dx * dx + dy * dy;
-          if (distSq < 3600 && distSq > 1) {
+          if (distSq < 14400 && distSq > 4) { // within 120px
             const dist = Math.sqrt(distSq);
-            const force = (1 - dist / 60) * 10;
-            g.x += (dx / dist) * force;
-            g.y += (dy / dist) * force;
+            const pull = (1 - dist / 120) * 0.45;
+            tx = tx + (g.ox - tx) * pull;
+            ty = ty + (g.oy - ty) * pull;
           }
         }
 
-        g.x += (targetX - g.x) * ease;
-        g.y += (targetY - g.y) * ease;
+        // Spring acceleration towards target position
+        const springK = 0.18 + factor * 0.12;
+        const ax = (tx - g.x) * springK;
+        const ay = (ty - g.y) * springK;
 
-        ctx.fillStyle = clean
-          ? "#FFFFFF"
-          : `rgba(245, 245, 250, ${g.alpha * 0.9})`;
+        g.vx = (g.vx + ax) * 0.76;
+        g.vy = (g.vy + ay) * 0.76;
+        g.x += g.vx;
+        g.y += g.vy;
 
-        ctx.fillRect(g.x, g.y, g.size, g.size);
+        // Dynamic grain size & alpha based on assembly state
+        const currentSize = g.size * (1 + factor * 0.35);
+        const currentAlpha = Math.min(1, g.alpha * (0.65 + factor * 0.35));
+
+        ctx.fillStyle = `rgba(255, 255, 255, ${currentAlpha})`;
+        ctx.fillRect(g.x, g.y, currentSize, currentSize);
+      }
+
+      // Seamlessly blend solid raster text as grains snap into position
+      if (factor > 0.15 && offscreenCanvasRef.current) {
+        ctx.save();
+        // Smoothly fade in solid raster layer as grains reach origin
+        const solidAlpha = Math.min(1, Math.max(0, (factor - 0.25) / 0.75));
+        ctx.globalAlpha = solidAlpha;
+        ctx.drawImage(offscreenCanvasRef.current, 0, 0, width, height);
+        ctx.restore();
       }
 
       ctx.restore();
@@ -202,39 +242,33 @@ export function GrainyName() {
     };
   };
 
+  const handleMouseEnter = () => {
+    setIsHovered(true);
+  };
+
   const handleMouseLeave = () => {
     mousePosRef.current.active = false;
-    setIsClean(false);
+    setIsHovered(false);
   };
 
   return (
     <div
       ref={containerRef}
-      onMouseEnter={() => setIsClean(true)}
+      onMouseEnter={handleMouseEnter}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      onTouchStart={() => setIsClean((prev) => !prev)}
+      onClick={() => setIsHovered((prev) => !prev)}
+      onTouchStart={() => setIsHovered((prev) => !prev)}
       className="relative w-full cursor-pointer select-none py-1 group"
-      title="Dhairya Bhatt — Hover to assemble grains into solid Century text"
+      title="Dhairya Bhatt — Hover to assemble grains into solid text"
     >
-      {/* Accessible semantic heading for screen readers & SEO */}
+      {/* Semantic accessible headline for SEO and screen readers */}
       <h1 className="sr-only">{siteConfig.name}</h1>
 
-      {/* Clean vector text layer in Century bold matching reference */}
-      <div
-        className={`absolute inset-0 pointer-events-none font-century font-bold text-5xl sm:text-7xl md:text-8xl lg:text-[96px] text-white leading-none tracking-tight transition-opacity duration-500 ${
-          isClean ? "opacity-100" : "opacity-0"
-        }`}
-        style={{ transform: "translateY(12%)" }}
-        aria-hidden="true"
-      >
-        {siteConfig.name}
-      </div>
-
-      {/* Active grain particles canvas */}
+      {/* Interactive grain particle canvas */}
       <canvas
         ref={canvasRef}
-        className={`block pointer-events-none transition-opacity duration-300 ${
+        className={`block transition-opacity duration-300 ${
           isReady ? "opacity-100" : "opacity-0"
         }`}
         aria-hidden="true"
