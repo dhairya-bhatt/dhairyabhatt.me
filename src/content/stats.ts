@@ -1,60 +1,43 @@
-export interface FunStat {
+export interface StatItem {
   label: string;
-  value: string | number;
-  suffix?: string;
-  subtext?: string;
-  icon?: string;
+  value: string;
+  note?: string;
 }
 
-export const funStats: FunStat[] = [
+export const statsData: StatItem[] = [
   {
-    label: "LeetCode Solved",
-    value: 280,
-    suffix: "+",
-    subtext: "Medium / Hard Algorithmic Problems",
-    icon: "code",
+    value: "~100",
+    label: "LeetCode problems solved",
+    note: "updated manually",
   },
   {
-    label: "GitHub Commits",
-    value: "850",
-    suffix: "+",
-    subtext: "Pushes, PRs & Contributions in past year",
-    icon: "git-commit",
+    value: "1,200",
+    label: "books printed and sold",
   },
   {
-    label: "Placement Target",
-    value: "Summer 2027",
-    subtext: "Quant Trading & High-Bar Software Engineering",
-    icon: "target",
+    value: "₹1.6 lakh",
+    label: "crowdfunded",
   },
   {
-    label: "Cups of Coffee & Tea",
-    value: "640",
-    suffix: "+",
-    subtext: "Fueled by Belfast roasts & late-night proofs",
-    icon: "coffee",
+    value: "500+",
+    label: "students at Bhavnagar Maths Competition",
   },
   {
-    label: "Campus Walk Count",
-    value: "14",
-    suffix: "k+",
-    subtext: "Steps clocked daily around QUB & Botanic",
-    icon: "footprints",
+    value: "4",
+    label: "editions of the competition",
   },
   {
-    label: "Optimal Pathfinding Latency",
-    value: "< 16",
-    suffix: "ms",
-    subtext: "Smooth 60 FPS A* state expansion",
-    icon: "zap",
+    value: "4",
+    label: "pathfinding algorithms visualised",
   },
 ];
 
 export const wantedBountyData = {
   wantedFor: "DHAIRYA BHATT",
-  alias: "\"THE QUANT CADET\"",
+  alias: '"THE QUANT CADET"',
   crime: "SOLVING RECURRENCES IN REAL TIME & OPTIMIZING BFS SEARCH SPACE",
-  bounty: "SUMMER 2027 INTERNSHIP OFFER",
+  bounty: "500,000,000 BERRIES",
   issuedBy: "NERV / MARINE HEADQUARTERS",
-  status: "ACTIVE & SEEKING OPPORTUNITIES",
+  status: "ACTIVE EXPLORER & BUILDER",
 };
+

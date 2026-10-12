@@ -15,7 +15,7 @@ export async function GET() {
         title: "Clair de Lune",
         artist: "Claude Debussy",
         album: "Suite Bergamasque",
-        albumImageUrl: "/photos/pictures (1).jpeg",
+        albumImageUrl: "/photos/pictures (1).png",
         songUrl: "https://open.spotify.com",
         isFallback: true,
       },

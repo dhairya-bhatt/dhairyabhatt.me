@@ -109,9 +109,18 @@ export function MenuOverlay({ isOpen, onClose }: MenuOverlayProps) {
         >
           {/* Top Bar with Minimal Header & Close Button */}
           <div className="relative z-20 flex items-center justify-between">
-            <span className="text-xs uppercase tracking-wider text-ink-muted/80 font-mono">
-              menu
-            </span>
+            <div className="flex items-center gap-3">
+              <div className="w-6 h-6">
+                <img
+                  src="/logo-transparent.png"
+                  alt="Dhairya Bhatt Logo"
+                  className="w-full h-full object-contain opacity-80"
+                />
+              </div>
+              <span className="text-xs uppercase tracking-wider text-ink-muted/80 font-mono">
+                menu
+              </span>
+            </div>
 
             {/* Circular Close Button */}
             <button
@@ -149,7 +158,7 @@ export function MenuOverlay({ isOpen, onClose }: MenuOverlayProps) {
                       <Link
                         href={item.href}
                         onClick={onClose}
-                        className={`inline-flex items-baseline gap-4 md:gap-8 transition-all duration-300 transform focus:outline-none ${
+                        className={`inline-flex items-baseline gap-4 md:gap-8 transition-all duration-300 transform focus:outline-none cursor-pointer active:scale-[0.97] ${
                           isHovered
                             ? "translate-x-3 text-white"
                             : isDimmed
@@ -166,7 +175,7 @@ export function MenuOverlay({ isOpen, onClose }: MenuOverlayProps) {
                         </span>
 
                         <ArrowUpRight
-                          className={`w-6 h-6 md:w-8 md:h-8 text-accent transition-all duration-300 ${
+                          className={`w-6 h-6 md:w-8 md:h-8 text-white transition-all duration-300 ${
                             isHovered
                               ? "opacity-100 translate-x-1 -translate-y-1"
                               : "opacity-0 -translate-x-2 translate-y-2 pointer-events-none"
@@ -186,7 +195,7 @@ export function MenuOverlay({ isOpen, onClose }: MenuOverlayProps) {
               <a
                 href={siteConfig.cvUrl}
                 download
-                className="text-white hover:text-accent transition-colors font-mono"
+                className="text-white hover:text-white/70 transition-colors font-mono"
               >
                 [ resume.pdf ]
               </a>

@@ -75,9 +75,9 @@ export function InteractiveMusicPlayer() {
   const isPlaying = !!data?.isPlaying;
 
   return (
-    <div className="relative rounded-2xl border border-white/10 bg-[#161618] p-5 sm:p-6 shadow-2xl flex flex-col justify-between overflow-hidden group">
+    <div className="relative rounded-2xl border border-white/10 bg-[#161618] p-4 sm:p-5 shadow-2xl flex flex-col justify-between overflow-hidden group">
       {/* Discord Spotify Rich Presence Header */}
-      <div className="flex items-center justify-between pb-3 mb-4 border-b border-white/[0.06] font-mono text-xs">
+      <div className="flex items-center justify-between pb-2.5 mb-3 border-b border-white/[0.06] font-mono text-xs">
         <div className="flex items-center gap-2">
           {/* Spotify Green Dot / Equalizer */}
           <div className="flex items-end gap-[2px] h-3 w-3">
@@ -86,8 +86,8 @@ export function InteractiveMusicPlayer() {
             <span className={`w-[2.5px] rounded-full bg-[#1DB954] ${isPlaying ? "animate-equalizer-3" : "h-1"}`} />
           </div>
 
-          <span className="uppercase tracking-widest text-[10px] text-[#1DB954] font-semibold">
-            {isPlaying ? "LISTENING TO SPOTIFY" : "SPOTIFY ACTIVITY // IDLE"}
+          <span className="uppercase tracking-widest text-[9px] sm:text-[10px] text-[#1DB954] font-semibold">
+            {isPlaying ? "LISTENING TO SPOTIFY" : "SPOTIFY ACTIVITY · IDLE"}
           </span>
         </div>
 
@@ -103,9 +103,9 @@ export function InteractiveMusicPlayer() {
       </div>
 
       {/* Main Player Display: Turntable + Track Information */}
-      <div className="flex items-center gap-5 sm:gap-6 my-2">
+      <div className="flex items-center gap-3 sm:gap-4 my-1 sm:my-1.5">
         {/* Turntable Vinyl Record with Live Album Art */}
-        <div className="relative w-24 h-24 sm:w-28 sm:h-28 shrink-0">
+        <div className="relative w-16 h-16 sm:w-20 sm:h-20 shrink-0">
           <div
             className={`w-full h-full rounded-full bg-[#0A0A0C] border-2 border-[#222225] shadow-2xl flex items-center justify-center relative ${
               isPlaying ? "animate-spin" : ""
@@ -113,45 +113,45 @@ export function InteractiveMusicPlayer() {
             style={{ animationDuration: "4s" }}
           >
             {/* Vinyl Grooves */}
-            <div className="absolute inset-1.5 rounded-full border border-white/[0.03]" />
-            <div className="absolute inset-3.5 rounded-full border border-white/[0.03]" />
-            <div className="absolute inset-5 rounded-full border border-white/[0.05]" />
+            <div className="absolute inset-1 rounded-full border border-white/[0.03]" />
+            <div className="absolute inset-2.5 rounded-full border border-white/[0.03]" />
+            <div className="absolute inset-4 rounded-full border border-white/[0.05]" />
 
             {/* Live Album Artwork as Record Label */}
-            <div className="relative w-10 h-10 sm:w-11 sm:h-11 rounded-full overflow-hidden border border-white/20 shadow-inner bg-black">
+            <div className="relative w-8 h-8 sm:w-10 sm:h-10 rounded-full overflow-hidden border border-white/20 shadow-inner bg-black">
               {data?.albumImageUrl ? (
                 <Image
                   src={data.albumImageUrl}
                   alt={data.album || "Spotify album art"}
                   fill
-                  sizes="48px"
+                  sizes="40px"
                   className="object-cover"
                 />
               ) : (
                 <div className="w-full h-full flex items-center justify-center bg-[#1DB954]/20">
-                  <Disc3 className="w-5 h-5 text-[#1DB954]" />
+                  <Disc3 className="w-4 h-4 sm:w-5 sm:h-5 text-[#1DB954]" />
                 </div>
               )}
             </div>
             {/* Center Spindle Hole */}
-            <div className="w-2 h-2 rounded-full bg-black border border-white/20 absolute z-10" />
+            <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-black border border-white/20 absolute z-10" />
           </div>
 
           {/* Turntable Tonearm (swivels when playing) */}
           <div
-            className="absolute -top-1 -right-2 w-8 h-14 origin-top-right transition-transform duration-700 pointer-events-none"
+            className="absolute -top-1 -right-2 w-7 h-12 origin-top-right transition-transform duration-700 pointer-events-none"
             style={{
               transform: isPlaying ? "rotate(24deg)" : "rotate(0deg)",
             }}
           >
-            <div className="w-1 h-12 bg-neutral-400 rounded shadow-md ml-auto" />
-            <div className="w-3 h-2 bg-neutral-200 rounded-sm -ml-1" />
+            <div className="w-0.5 sm:w-1 h-10 sm:h-12 bg-neutral-400 rounded shadow-md ml-auto" />
+            <div className="w-2.5 sm:w-3 h-2 bg-neutral-200 rounded-sm -ml-1" />
           </div>
         </div>
 
         {/* Discord-style Metadata */}
-        <div className="flex-1 min-w-0 space-y-1">
-          <span className="font-mono text-[10px] text-ink-muted uppercase tracking-wider block truncate">
+        <div className="flex-1 min-w-0 space-y-0.5 sm:space-y-1">
+          <span className="font-mono text-[9px] sm:text-[10px] text-ink-muted uppercase tracking-wider block truncate">
             {data?.album || "Spotify Audio"}
           </span>
 
@@ -159,14 +159,14 @@ export function InteractiveMusicPlayer() {
             href={data?.songUrl || "https://open.spotify.com"}
             target="_blank"
             rel="noopener noreferrer"
-            className="font-century font-bold text-lg sm:text-xl text-white hover:text-[#1DB954] transition-colors truncate block group"
+            className="font-century font-bold text-base sm:text-lg md:text-xl text-white hover:text-[#1DB954] transition-colors truncate block group"
           >
             <span className="truncate group-hover:underline">
               {data?.title || "Not Listening Currently"}
             </span>
           </a>
 
-          <p className="font-funnel text-xs text-ink-secondary truncate">
+          <p className="font-funnel text-[11px] sm:text-xs text-ink-secondary truncate">
             {data?.artist || "Spotify Account"}
           </p>
 

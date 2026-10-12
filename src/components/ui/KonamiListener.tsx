@@ -68,13 +68,13 @@ export function KonamiListener() {
           className="fixed inset-0 z-[120] pointer-events-none flex items-center justify-center bg-black/85 backdrop-blur-md"
         >
           <div className="text-center space-y-3 p-8 border border-white/20 bg-black/95 rounded-2xl shadow-2xl max-w-md">
-            <span className="font-mono text-[11px] uppercase tracking-widest text-accent font-semibold block">
-              SECRET REVEALED // BLEACH
+            <span className="font-mono text-[11px] uppercase tracking-widest text-white/70 font-semibold block">
+              SECRET REVEALED · BLEACH
             </span>
-            <h2 className="font-serif text-5xl md:text-6xl text-white tracking-widest uppercase font-normal">
+            <h2 className="font-century text-5xl md:text-6xl text-white tracking-widest uppercase font-normal">
               卍解 · BANKAI
             </h2>
-            <p className="font-serif italic text-sm text-ink-muted">
+            <p className="font-funnel italic text-sm text-ink-muted">
               &ldquo;All things in the universe, turn to ashes.&rdquo;
             </p>
           </div>

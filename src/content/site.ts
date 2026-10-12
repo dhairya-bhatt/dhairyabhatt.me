@@ -26,17 +26,17 @@ export interface SiteConfig {
 export const siteConfig: SiteConfig = {
   name: "Dhairya Bhatt",
   role: "Mathematics & Computer Science Undergrad",
-  subRole: "Queen's University Belfast · Target Summer 2027 Quant & Tech Placements",
+  subRole: "Queen's University Belfast · Mathematics & Computer Science",
   university: "Queen's University Belfast",
   location: "Belfast, United Kingdom",
   timezone: "Europe/London",
   domain: "dhairyabhatt.me",
   url: "https://dhairyabhatt.me",
   bio: {
-    lead: "Hi, I'm Dhairya Bhatt — a second-year Mathematics & Computer Science undergraduate at Queen's University Belfast.",
+    lead: "Hi, I'm Dhairya Bhatt — a second-year Mathematics & Computer Science student at Queen's University Belfast.",
     body: [
-      "My work sits at the intersection of rigorous mathematical reasoning and low-level computational performance. I'm fascinated by stochastic processes, discrete mathematics, and algorithms that scale under real-time constraints.",
-      "Currently preparing for Summer 2027 Quantitative Trading, Quantitative Research, and Core Software Engineering internships. When I'm not writing algorithmic simulations or solving contest problems, I build playful tools and explore Belfast with a camera."
+      "I build software and care about getting the fundamentals right: correct algorithms, clean structure, and code I can explain line by line.",
+      "Secretary of the Geography Society (organising events, managing communications, and rebuilding 'The Graticule' journal site), Course Representative on the Student Voice Committee, and peer mentor in applied mathematics. Looking for a summer 2027 placement in tech/engineering roles."
     ],
     focus: [
       "Quantitative Development & Trading Systems",

@@ -1,49 +1,12 @@
 /* =========================================================================
-   Local Offline Fonts (Zero network dependency, 100% reliable offline)
+   Core Typography Hierarchy (3 Fonts Max)
+   1. Title & Heading: Century ("Century Offline" / DM Serif Display)
+   2. Body & Subtitles: Funnel Sans
+   3. Monospace & Code: Geist Mono
    ========================================================================= */
 @font-face {
-  font-family: 'Press Start 2P';
-  src: url('/fonts/press-start-2p.woff2') format('woff2');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Pirata One';
-  src: url('/fonts/pirata-one.woff2') format('woff2');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Bodoni Moda';
-  src: url('/fonts/bodoni-moda.woff2') format('woff2');
-  font-weight: 900;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Cinzel';
-  src: url('/fonts/cinzel.woff2') format('woff2');
-  font-weight: 900;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Rubik Glitch';
-  src: url('/fonts/rubik-glitch.woff2') format('woff2');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Funnel Sans';
-  src: url('/fonts/funnel-sans.woff2') format('woff2');
+  font-family: 'Rose Gard';
+  src: url('/fonts/rose-gard.otf') format('opentype');
   font-weight: 400 700;
   font-style: normal;
   font-display: swap;
@@ -51,8 +14,24 @@
 
 @font-face {
   font-family: 'Century Offline';
-  src: url('/fonts/dm-serif-display.woff2') format('woff2');
+  src: url('/fonts/dm-serif-display.ttf') format('truetype');
   font-weight: 400 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Funnel Sans';
+  src: url('/fonts/funnel-sans-regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Funnel Sans';
+  src: url('/fonts/funnel-sans-bold.ttf') format('truetype');
+  font-weight: 700;
   font-style: normal;
   font-display: swap;
 }
@@ -64,7 +43,6 @@
 :root {
   --background: #111111;
   --foreground: #FFFFFF;
-  --accent: #FF4632;
   --surface: #18181A;
 }
 
@@ -93,8 +71,8 @@ body {
 }
 
 ::selection {
-  background-color: #FF4632;
-  color: #FFFFFF;
+  background-color: #FFFFFF;
+  color: #000000;
 }
 
 /* Custom Scrollbar */
@@ -144,6 +122,18 @@ a:focus-visible,
 button:focus-visible,
 input:focus-visible,
 textarea:focus-visible {
-  outline: 2px solid #FF4632;
+  outline: 2px solid #FFFFFF;
   outline-offset: 3px;
+}
+
+/* Hide default pointer on desktop when custom blob cursor is active */
+@media (pointer: fine) {
+  html.custom-cursor-active,
+  html.custom-cursor-active body,
+  html.custom-cursor-active a,
+  html.custom-cursor-active button,
+  html.custom-cursor-active [role="button"],
+  html.custom-cursor-active .cursor-pointer {
+    cursor: none !important;
+  }
 }

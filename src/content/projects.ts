@@ -1,78 +1,148 @@
+export type ProjectStatus = "Live" | "In progress" | "Ongoing" | "Completed" | "Published";
+export type ProjectGroup = "Code" | "Beyond the code";
+
 export interface Project {
   slug: string;
   title: string;
-  tagline: string;
-  description: string;
-  category: "Full Stack" | "Algorithms" | "Quantitative" | "Systems";
+  headingFallback?: string;
+  summary: string;
+  group: ProjectGroup;
   stack: string[];
-  status: "Live" | "In Progress" | "Archived";
-  metrics?: string[];
-  githubUrl?: string;
-  liveUrl?: string;
+  role?: string;
+  status: ProjectStatus;
+  stats?: string[];
+  liveUrl?: string | null;
+  repoUrl?: string | null;
+  linkLabel?: string;
   featured: boolean;
-  accentColor?: string;
+  featuredOrder?: number;
   previewImage?: string;
+  label?: string; // e.g. "Beyond the code" badge
 }
 
 export const projectsData: Project[] = [
+  // 1. The Graticule (Featured 1)
+  {
+    slug: "the-graticule",
+    title: "The Graticule",
+    summary:
+      "Student-led geography journal, rebuilt from a Wix site into a custom site with a JSON database and an admin panel so editors can publish without touching code.",
+    group: "Code",
+    stack: ["TypeScript", "HTML", "CSS", "JSON"],
+    role: "Sole developer, Geography Society",
+    status: "Live",
+    stats: undefined,
+    liveUrl: null,
+    repoUrl: null,
+    featured: true,
+    featuredOrder: 1,
+    previewImage: "/photos/pictures (2).png",
+  },
+
+  // 2. QUB GeoGuessr (Featured 2)
   {
     slug: "qub-geoguessr",
     title: "QUB GeoGuessr",
-    tagline: "Campus geography exploration game with custom Leaflet coordinates & Elo rating",
-    description: "A fast-paced, competitive GeoGuessr-inspired game tailored for the Queen's University Belfast campus. Features proprietary high-resolution campus photography, custom Leaflet interactive mapping with distance-based exponential decay scoring, Elo-style player rating, and institutional email verification for campus leaderboards.",
-    category: "Full Stack",
-    stack: ["Next.js", "TypeScript", "Leaflet.js", "PostgreSQL", "Tailwind CSS", "Prisma"],
-    status: "In Progress",
-    metrics: ["Sub-50ms map response", "Elo matchmaking engine", "100+ Campus Waypoints"],
-    githubUrl: "https://github.com/dhairyabhatt/qub-geoguessr",
+    summary:
+      "GeoGuessr-style game set on the QUB campus, using my own photographs and a custom Leaflet map. Distance-based scoring, an Elo-style rating system, and sign-up restricted to @qub.ac.uk emails.",
+    group: "Code",
+    stack: ["Node.js", "Express", "Supabase", "PostgreSQL", "Leaflet"],
+    role: "Solo project",
+    status: "In progress",
+    stats: ["~30 campus photos", "Elo rating system"],
     liveUrl: "https://geoguessr.dhairyabhatt.me",
+    repoUrl: null,
     featured: true,
-    accentColor: "#FF4632",
-    previewImage: "/photos/pictures (1).jpeg",
+    featuredOrder: 2,
+    previewImage: "/photos/pictures (1).png",
   },
+
+  // 3. Book (Featured 3, labeled "Beyond the code")
+  {
+    slug: "my-book",
+    title: "My book",
+    headingFallback: "My book",
+    summary:
+      "Wrote a book at 13. Raised ₹1.6 lakh through crowdfunding to publish and print 1,200 copies, then sold them and donated the proceeds to local school funding, in instalments as copies sold. Also available as an ebook on Google Play Books.",
+    group: "Beyond the code",
+    label: "Beyond the code",
+    stack: [],
+    role: "Author and campaign organiser",
+    status: "Published",
+    stats: ["₹1.6 lakh raised", "1,200 copies printed and sold", "Proceeds to local school funding"],
+    liveUrl: "https://play.google.com/store/books/details?id=xlosEAAAQBAJ",
+    repoUrl: null,
+    linkLabel: "Read on Google Play Books",
+    featured: true,
+    featuredOrder: 3,
+    previewImage: "/photos/pictures (7).png",
+  },
+
+  // 4. Pathfinding Visualizer (Code group)
   {
     slug: "pathfinding-visualizer",
     title: "Pathfinding Visualizer",
-    tagline: "Interactive 2D graph traversal engine supporting BFS, DFS, Dijkstra & A*",
-    description: "Real-time interactive pathfinding and graph exploration tool built to visualize traversal heuristics, state expansions, and weighted cost evaluations. Includes recursive division maze generation, dynamic obstacle weight painting, adjustable animation tick speed, and live benchmark metrics comparing nodes visited vs. optimal path length.",
-    category: "Algorithms",
-    stack: ["TypeScript", "React", "Canvas API", "Data Structures", "Tailwind CSS"],
-    status: "Live",
-    metrics: ["4 Search Heuristics", "60 FPS Canvas Render", "Maze Generation"],
-    githubUrl: "https://github.com/dhairyabhatt/pathfinding-visualizer",
-    liveUrl: "https://pathfinding.dhairyabhatt.me",
-    featured: true,
-    accentColor: "#3B82F6",
-    previewImage: "/photos/pictures (3).jpeg",
-  },
-  {
-    slug: "limit-order-book-simulator",
-    title: "LOB Simulator & Matching Engine",
-    tagline: "High-throughput in-memory order book simulation with price-time priority",
-    description: "Deterministic in-memory limit order book matching engine modeling continuous double auctions. Implements price-time priority queues using B-Trees and doubly-linked order buckets, real-time depth-of-book telemetry, order cancellation handling, and synthetic geometric Brownian motion market makers.",
-    category: "Quantitative",
-    stack: ["TypeScript", "C++ / WebAssembly", "WebSockets", "Chart.js"],
-    status: "In Progress",
-    metrics: ["Price-Time Priority (FIFO)", "Level 2 Market Depth", "Microsecond latencies"],
-    githubUrl: "https://github.com/dhairyabhatt/lob-matching-engine",
-    liveUrl: undefined,
-    featured: true,
-    accentColor: "#10B981",
-    previewImage: "/photos/pictures (6).jpeg",
-  },
-  {
-    slug: "discrete-event-cache-simulator",
-    title: "Memory Hierarchy & Cache Simulator",
-    tagline: "Trace-driven cache simulation comparing LRU, LFU & FIFO eviction policies",
-    description: "Hardware-level cache hierarchy modeling tool testing hit/miss ratios across diverse L1/L2 associative architectures (Direct, N-Way Set Associative, Fully Associative). Parses Valgrind memory trace files to visualize memory bottlenecks and penalty cycles.",
-    category: "Systems",
-    stack: ["Python", "TypeScript", "D3.js", "Web Workers"],
-    status: "In Progress",
-    metrics: ["L1 / L2 Hierarchy", "Memory Trace Analysis", "Hit/Miss Profiling"],
-    githubUrl: "https://github.com/dhairyabhatt/cache-sim",
-    liveUrl: undefined,
+    summary:
+      "Animated BFS, DFS, Dijkstra and A* (Manhattan heuristic) on an interactive grid, with maze generation, speed control and live per-algorithm stats. Algorithms are pure, unit-tested functions.",
+    group: "Code",
+    stack: ["JavaScript", "React"],
+    role: "Developer",
+    status: "In progress",
+    stats: ["4 algorithms", "Unit-tested core"],
+    liveUrl: null,
+    repoUrl: null,
     featured: false,
-    accentColor: "#F59E0B",
-    previewImage: "/photos/pictures (8).jpeg",
+    previewImage: "/photos/pictures (3).png",
+  },
+
+  // 5. DSA in C++ (Code group)
+  {
+    slug: "dsa-in-cpp",
+    title: "DSA in C++",
+    summary:
+      "Public log of data structures and algorithms practice following NeetCode 150 and Striver's A2Z.",
+    group: "Code",
+    stack: ["C++"],
+    role: "Student",
+    status: "Ongoing",
+    stats: ["~100 LeetCode problems solved"],
+    liveUrl: null,
+    repoUrl: null,
+    featured: false,
+    previewImage: "/photos/pictures (4).png",
+  },
+
+  // 6. This Portfolio (Code group)
+  {
+    slug: "this-portfolio",
+    title: "This Portfolio",
+    summary:
+      "Interactive personal site with a live Spotify widget, a grain-to-clear name effect and a pokéball menu.",
+    group: "Code",
+    stack: ["Next.js", "TypeScript", "Tailwind", "Framer Motion"],
+    role: "Sole developer",
+    status: "Live",
+    stats: undefined,
+    liveUrl: "https://dhairyabhatt.me",
+    repoUrl: null,
+    featured: false,
+    previewImage: "/photos/pictures (5).png",
+  },
+
+  // 7. Bhavnagar Maths Competition (Beyond the code group)
+  {
+    slug: "bhavnagar-maths-competition",
+    title: "Bhavnagar Maths Competition",
+    summary:
+      "Annual maths competition for classes 3-10, organised over four consecutive years. I wrote the question papers, built the registration forms and marked the scripts, working with volunteer teachers who handled management and logistics.",
+    group: "Beyond the code",
+    stack: [],
+    role: "Organiser",
+    status: "Completed",
+    stats: ["4 editions", "Classes 3-10", "500+ students"],
+    liveUrl: null,
+    repoUrl: null,
+    featured: false,
+    previewImage: "/photos/pictures (8).png",
   },
 ];

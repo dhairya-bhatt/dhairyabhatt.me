@@ -1,22 +1,8 @@
 import type { Metadata, Viewport } from "next";
-import { Instrument_Serif, Inter, JetBrains_Mono } from "next/font/google";
+import { JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { CustomCursor } from "@/components/ui/CustomCursor";
 import { KonamiListener } from "@/components/ui/KonamiListener";
-
-const instrumentSerif = Instrument_Serif({
-  subsets: ["latin"],
-  weight: ["400"],
-  style: ["normal", "italic"],
-  variable: "--font-instrument-serif",
-  display: "swap",
-});
-
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-geist-sans",
-  display: "swap",
-});
 
 const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
@@ -30,7 +16,7 @@ export const metadata: Metadata = {
     template: "%s | Dhairya Bhatt",
   },
   description:
-    "Mathematics & Computer Science undergrad at Queen's University Belfast. Exploring quantitative trading, high-performance systems, and full-stack software engineering.",
+    "Second-year Mathematics and Computer Science student at Queen's, Belfast. I write software and solve algorithm problems most days. I also run things: Geography Society Secretary, course rep, peer maths mentor, and organiser of a four-year school maths competition. Applying for 2027 placements.",
   metadataBase: new URL("https://dhairyabhatt.me"),
   keywords: [
     "Dhairya Bhatt",
@@ -44,14 +30,17 @@ export const metadata: Metadata = {
   authors: [{ name: "Dhairya Bhatt", url: "https://dhairyabhatt.me" }],
   creator: "Dhairya Bhatt",
   icons: {
-    icon: "/favicon.svg",
-    shortcut: "/favicon.svg",
-    apple: "/favicon.svg",
+    icon: [
+      { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+      { url: "/icon-192.png", sizes: "192x192", type: "image/png" },
+    ],
+    shortcut: "/favicon.ico",
+    apple: "/apple-touch-icon.png",
   },
   openGraph: {
     title: "Dhairya Bhatt — Mathematics & Computer Science Undergrad",
     description:
-      "2nd-year Maths & CS at Queen's University Belfast. Target Summer 2027 Quantitative Trading & Tech Placements.",
+      "2nd-year Maths & CS at Queen's University Belfast. Exploring quantitative systems, algorithms, and full-stack software engineering.",
     url: "https://dhairyabhatt.me",
     siteName: "Dhairya Bhatt Portfolio",
     locale: "en_GB",
@@ -89,9 +78,13 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${instrumentSerif.variable} ${inter.variable} ${jetbrainsMono.variable}`}
+      className={jetbrainsMono.variable}
     >
-      <body className="bg-canvas text-ink-primary antialiased selection:bg-accent selection:text-white min-h-screen flex flex-col">
+      <head>
+        <link rel="preload" href="/fonts/rose-gard.otf" as="font" type="font/otf" crossOrigin="anonymous" />
+        <link rel="preload" href="/fonts/dm-serif-display.ttf" as="font" type="font/ttf" crossOrigin="anonymous" />
+      </head>
+      <body className="bg-canvas text-ink-primary antialiased selection:bg-white selection:text-black min-h-screen flex flex-col">
         {/* Global subtle film grain overlay */}
         <div className="film-grain-overlay" aria-hidden="true" />
         

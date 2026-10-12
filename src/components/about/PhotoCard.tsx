@@ -99,22 +99,24 @@ export function PhotoCard({ photo, onClick, className = "" }: PhotoCardProps) {
             {/* Back of Polaroid with Caption */}
             <div className="absolute inset-0 bg-[#222225] p-4 rounded-md border border-white/20 [transform:rotateY(180deg)] [backface-visibility:hidden] flex flex-col justify-between">
               <div>
-                <span className="font-mono text-[10px] text-accent uppercase tracking-widest block mb-2">
+                <span className="font-mono text-[10px] text-white/70 uppercase tracking-widest block mb-2">
                   PHOTO ARCHIVE
                 </span>
-                <p className="font-serif italic text-sm text-ink-primary leading-snug">
-                  &ldquo;{photo.caption}&rdquo;
-                </p>
+                {photo.caption && (
+                  <p className="font-funnel italic text-sm text-ink-primary leading-snug">
+                    &ldquo;{photo.caption}&rdquo;
+                  </p>
+                )}
               </div>
               <div className="border-t border-white/10 pt-2 flex items-center justify-between font-mono text-[9px] text-ink-muted">
-                <span>{photo.location || "BELFAST"}</span>
+                <span>{photo.location || ""}</span>
                 <button
                   type="button"
                   onClick={(e) => {
                     e.stopPropagation();
                     onClick();
                   }}
-                  className="text-accent underline hover:text-white"
+                  className="text-white/80 underline hover:text-white"
                 >
                   EXPAND
                 </button>
@@ -205,10 +207,10 @@ export function PhotoCard({ photo, onClick, className = "" }: PhotoCardProps) {
       )}
 
       {/* Subtle Caption Tag on hover for non-flip cards */}
-      {photo.effect !== "polaroid-flip" && (
+      {photo.effect !== "polaroid-flip" && photo.location && (
         <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none whitespace-nowrap z-30">
           <span className="font-mono text-[10px] text-white/90 bg-black/80 px-2 py-0.5 rounded border border-white/10 shadow-lg">
-            {photo.location || "View Photo"}
+            {photo.location}
           </span>
         </div>
       )}

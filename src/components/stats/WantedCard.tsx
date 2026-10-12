@@ -24,12 +24,12 @@ export function WantedCard() {
       {/* Header */}
       <div className="text-center border-b border-white/10 pb-4 mb-5">
         <span className="font-mono text-[10px] tracking-widest text-ink-muted uppercase block">
-          SHOW EASTER EGG // ONE PIECE
+          SHOW EASTER EGG · ONE PIECE
         </span>
-        <h4 className="font-serif text-3xl sm:text-4xl tracking-widest uppercase text-[#F5F2EB] mt-1 font-bold">
+        <h4 className="font-century text-3xl sm:text-4xl tracking-widest uppercase text-[#F5F2EB] mt-1 font-bold">
           WANTED
         </h4>
-        <p className="font-mono text-[10px] tracking-widest text-accent uppercase">
+        <p className="font-mono text-[10px] tracking-widest text-ink-muted uppercase">
           DEAD OR ALIVE
         </p>
       </div>
@@ -48,7 +48,7 @@ export function WantedCard() {
       {/* Name and Bounty Details */}
       <div className="space-y-3 text-center font-mono">
         <div>
-          <span className="text-xl sm:text-2xl font-serif tracking-wider uppercase text-white block">
+          <span className="text-xl sm:text-2xl font-century tracking-wider uppercase text-white block">
             {wantedBountyData.wantedFor}
           </span>
           <span className="text-xs text-ink-muted block mt-0.5">
@@ -60,7 +60,7 @@ export function WantedCard() {
           <span className="text-[10px] text-ink-muted uppercase tracking-wider block">
             BOUNTY REWARD:
           </span>
-          <span className="text-base sm:text-lg font-bold text-accent tracking-wider block">
+          <span className="text-base sm:text-lg font-bold text-white tracking-wider block">
             ₿ {wantedBountyData.bounty}
           </span>
         </div>
