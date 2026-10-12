@@ -27,7 +27,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
     setMousePos((prev) => ({ ...prev, isHovered: false }));
   };
 
-  const displayTitle = project.title || project.headingFallback || "My book";
+  const displayTitle = project.title || project.headingFallback || "Author of All About Maths";
 
   // Check link validity: show whenever a liveUrl exists
   const hasValidLink = Boolean(project.liveUrl);

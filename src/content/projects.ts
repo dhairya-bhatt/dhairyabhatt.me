@@ -62,8 +62,8 @@ export const projectsData: Project[] = [
   // 3. Book (Featured 3, labeled "Beyond the code")
   {
     slug: "my-book",
-    title: "My book",
-    headingFallback: "My book",
+    title: "Author of All About Maths",
+    headingFallback: "Author of All About Maths",
     summary:
       "Wrote a book at 13. Raised ₹1.6 lakh through crowdfunding to publish and print 1,200 copies, then sold them and donated the proceeds to local school funding, in instalments as copies sold. Also available as an ebook on Google Play Books.",
     group: "Beyond the code",

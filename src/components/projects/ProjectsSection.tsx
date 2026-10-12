@@ -33,7 +33,7 @@ export function ProjectsSection() {
         <div className="space-y-36 md:space-y-48 mt-16 md:mt-24">
           {featuredProjects.map((project, idx) => {
             const isReversed = idx % 2 === 1;
-            const displayTitle = project.title || project.headingFallback || "My book";
+            const displayTitle = project.title || project.headingFallback || "Author of All About Maths";
 
             // Show live project link if liveUrl exists
             const canShowLiveLink = Boolean(project.liveUrl);
