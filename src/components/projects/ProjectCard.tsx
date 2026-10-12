@@ -29,17 +29,10 @@ export function ProjectCard({ project }: ProjectCardProps) {
 
   const displayTitle = project.title || project.headingFallback || "My book";
 
-  // Check link validity according to rules:
-  // For in-progress / ongoing / completed without a live link, hide link.
-  const hasValidLink =
-    (project.status.toLowerCase() === "live" && Boolean(project.liveUrl)) ||
-    (project.status.toLowerCase() === "published" && Boolean(project.liveUrl));
+  // Check link validity: show whenever a liveUrl exists
+  const hasValidLink = Boolean(project.liveUrl);
 
-  const linkText =
-    project.linkLabel ||
-    (project.status.toLowerCase() === "published"
-      ? "Read on Google Play Books"
-      : "live");
+  const linkText = project.linkLabel || "live";
 
   return (
     <div
@@ -165,6 +158,18 @@ export function ProjectCard({ project }: ProjectCardProps) {
               >
                 <span>{linkText}</span>
                 <ArrowUpRight className="w-3.5 h-3.5" />
+              </a>
+            )}
+
+            {project.repoUrl && (
+              <a
+                href={project.repoUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-ink-secondary hover:text-white inline-flex items-center gap-1 transition-colors underline-offset-4 hover:underline text-[11px]"
+              >
+                <span>code</span>
+                <ArrowUpRight className="w-3 h-3" />
               </a>
             )}
           </div>

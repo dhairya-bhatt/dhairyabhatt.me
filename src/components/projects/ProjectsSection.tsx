@@ -35,8 +35,8 @@ export function ProjectsSection() {
             const isReversed = idx % 2 === 1;
             const displayTitle = project.title || project.headingFallback || "My book";
 
-            // Rule: "show the link only if the status is 'live'; otherwise show the badge"
-            const canShowLiveLink = project.status.toLowerCase() === "live" && Boolean(project.liveUrl);
+            // Show live project link if liveUrl exists
+            const canShowLiveLink = Boolean(project.liveUrl);
 
             return (
               <motion.div
@@ -146,9 +146,9 @@ export function ProjectsSection() {
                   )}
 
                   {/* Action Links */}
-                  <div className="flex items-center gap-4 pt-3 font-funnel text-sm">
+                  <div className="flex flex-wrap items-center gap-4 pt-3 font-funnel text-sm">
                     {/* Live link or external link */}
-                    {canShowLiveLink && (
+                    {Boolean(project.liveUrl) && (
                       <a
                         href={project.liveUrl!}
                         target="_blank"
@@ -160,16 +160,16 @@ export function ProjectsSection() {
                       </a>
                     )}
 
-                    {/* Published book link (e.g. Google Play Books) */}
-                    {project.status === "Published" && project.liveUrl && (
+                    {/* GitHub Source Code link */}
+                    {Boolean(project.repoUrl) && (
                       <a
-                        href={project.liveUrl}
+                        href={project.repoUrl!}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1.5 text-white hover:text-white/80 transition-colors font-medium underline underline-offset-4 decoration-white/40 hover:decoration-white"
+                        className="inline-flex items-center gap-1.5 text-ink-secondary hover:text-white transition-colors font-medium underline underline-offset-4 decoration-white/20 hover:decoration-white text-xs"
                       >
-                        <span>{project.linkLabel || "Read on Google Play Books"}</span>
-                        <ArrowUpRight className="w-4 h-4" />
+                        <span>source code</span>
+                        <ArrowUpRight className="w-3.5 h-3.5" />
                       </a>
                     )}
                   </div>
