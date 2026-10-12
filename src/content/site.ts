@@ -79,5 +79,5 @@ export const siteConfig: SiteConfig = {
       isPrimary: true,
     },
   ],
-  cvUrl: "/cv.pdf",
+  cvUrl: "/Dhairya_Bhatt_CV.pdf",
 };

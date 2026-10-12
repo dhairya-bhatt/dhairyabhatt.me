@@ -194,7 +194,7 @@ export function MenuOverlay({ isOpen, onClose }: MenuOverlayProps) {
             <div className="flex items-center gap-6">
               <a
                 href={siteConfig.cvUrl}
-                download
+                download="Dhairya_Bhatt_CV.pdf"
                 className="text-white hover:text-white/70 transition-colors font-mono"
               >
                 [ resume.pdf ]

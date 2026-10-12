@@ -43,7 +43,7 @@ export const aboutContent: AboutContent = {
     "Second-year Mathematics and Computer Science student at Queen's, Belfast. I write software and solve algorithm problems most days. I also run things: Geography Society Secretary, course rep, peer maths mentor, and organiser of a four-year school maths competition. Applying for 2027 placements.",
   metaDescription:
     "Second-year Mathematics and Computer Science student at Queen's, Belfast. Applying for 2027 placements in quantitative trading and software engineering.",
-  cvUrl: "/cv.pdf",
+  cvUrl: "/Dhairya_Bhatt_CV.pdf",
   educations: [
     {
       institution: "Queen's University Belfast",
