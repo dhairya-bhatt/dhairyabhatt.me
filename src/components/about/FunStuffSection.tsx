@@ -139,7 +139,7 @@ export function FunStuffSection() {
               Mobile: Sits at z-0 so cards at z-20 overlap directly over it. */}
           <motion.div
             style={{ opacity: titleOpacity, scale: titleScale }}
-            className="absolute inset-x-0 top-1/2 -translate-y-1/2 flex items-center justify-center z-0 md:z-10 pointer-events-none select-none px-4 will-change-transform"
+            className="absolute inset-0 flex items-center justify-center z-0 md:z-10 pointer-events-none select-none px-4 will-change-transform"
           >
             <div className="text-center flex flex-col items-center justify-center">
               {/* Meta tag */}
@@ -171,34 +171,40 @@ export function FunStuffSection() {
           </motion.div>
 
           {/* CARD 1: Music & Live Vinyl Card
-              Mobile: Centered (overlaps main title).
-              Desktop: Left side (left-8 lg:left-14 xl:left-24). */}
-          <motion.div
-            style={{ y: yCard1, opacity: opacityCard1 }}
-            className="absolute left-1/2 -translate-x-1/2 md:translate-x-0 md:left-8 lg:left-14 xl:left-24 top-1/2 -translate-y-1/2 z-20 pointer-events-auto w-[90vw] max-w-[310px] sm:max-w-[340px] md:max-w-[380px] lg:max-w-[400px] will-change-transform shadow-2xl"
-          >
-            <InteractiveMusicPlayer />
-          </motion.div>
+              Mobile: Perfect dead-center (overlaps main title).
+              Desktop: Left side (md:justify-start with md:px-8 lg:px-14 xl:px-24). */}
+          <div className="absolute inset-0 flex items-center justify-center md:justify-start pointer-events-none z-20 md:px-8 lg:px-14 xl:px-24">
+            <motion.div
+              style={{ y: yCard1, opacity: opacityCard1 }}
+              className="pointer-events-auto w-[90vw] max-w-[320px] sm:max-w-[350px] md:max-w-[380px] lg:max-w-[400px] will-change-transform shadow-2xl"
+            >
+              <InteractiveMusicPlayer />
+            </motion.div>
+          </div>
 
           {/* CARD 2: Photo Gallery Card
-              Mobile: Centered (overlaps main title).
-              Desktop: Right side (right-8 lg:right-14 xl:right-24). */}
-          <motion.div
-            style={{ y: yCard2, opacity: opacityCard2 }}
-            className="absolute left-1/2 -translate-x-1/2 md:translate-x-0 md:left-auto md:right-8 lg:right-14 xl:right-24 top-1/2 -translate-y-1/2 z-20 pointer-events-auto w-[90vw] max-w-[310px] sm:max-w-[340px] md:max-w-[380px] lg:max-w-[400px] will-change-transform shadow-2xl"
-          >
-            <PhotoCollage />
-          </motion.div>
+              Mobile: Perfect dead-center (overlaps main title).
+              Desktop: Right side (md:justify-end with md:px-8 lg:px-14 xl:px-24). */}
+          <div className="absolute inset-0 flex items-center justify-center md:justify-end pointer-events-none z-20 md:px-8 lg:px-14 xl:px-24">
+            <motion.div
+              style={{ y: yCard2, opacity: opacityCard2 }}
+              className="pointer-events-auto w-[90vw] max-w-[320px] sm:max-w-[350px] md:max-w-[380px] lg:max-w-[400px] will-change-transform shadow-2xl"
+            >
+              <PhotoCollage />
+            </motion.div>
+          </div>
 
           {/* CARD 3: Campus Societies Card
-              Mobile: Centered (overlaps main title).
-              Desktop: Left side (left-8 lg:left-14 xl:left-24) - following left-right-left rhythm. */}
-          <motion.div
-            style={{ y: yCard3, opacity: opacityCard3 }}
-            className="absolute left-1/2 -translate-x-1/2 md:translate-x-0 md:left-8 lg:left-14 xl:left-24 top-1/2 -translate-y-1/2 z-20 pointer-events-auto w-[90vw] max-w-[310px] sm:max-w-[340px] md:max-w-[380px] lg:max-w-[400px] will-change-transform shadow-2xl"
-          >
-            <SocietiesCard />
-          </motion.div>
+              Mobile: Perfect dead-center (overlaps main title).
+              Desktop: Left side (md:justify-start with md:px-8 lg:px-14 xl:px-24). */}
+          <div className="absolute inset-0 flex items-center justify-center md:justify-start pointer-events-none z-20 md:px-8 lg:px-14 xl:px-24">
+            <motion.div
+              style={{ y: yCard3, opacity: opacityCard3 }}
+              className="pointer-events-auto w-[90vw] max-w-[320px] sm:max-w-[350px] md:max-w-[380px] lg:max-w-[400px] will-change-transform shadow-2xl"
+            >
+              <SocietiesCard />
+            </motion.div>
+          </div>
         </div>
       </div>
     </section>
