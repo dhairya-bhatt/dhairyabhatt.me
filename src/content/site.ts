@@ -49,8 +49,8 @@ export const siteConfig: SiteConfig = {
     {
       name: "GitHub",
       label: "Code & Open Source",
-      href: "https://github.com/dhairyabhatt",
-      username: "@dhairyabhatt",
+      href: "https://github.com/dhairya-bhatt",
+      username: "@dhairya-bhatt",
       icon: "github",
       isPrimary: true,
     },

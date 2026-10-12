@@ -36,7 +36,7 @@ export const projectsData: Project[] = [
     repoUrl: null,
     featured: true,
     featuredOrder: 1,
-    previewImage: "/photos/pictures (2).png",
+    previewImage: "/projects/the-graticule.gif",
   },
 
   // 2. QUB GeoGuessr (Featured 2)
@@ -54,7 +54,7 @@ export const projectsData: Project[] = [
     repoUrl: null,
     featured: true,
     featuredOrder: 2,
-    previewImage: "/photos/pictures (1).png",
+    previewImage: "/projects/qub-geogussr.gif",
   },
 
   // 3. Book (Featured 3, labeled "Beyond the code")
@@ -75,7 +75,7 @@ export const projectsData: Project[] = [
     linkLabel: "Read on Google Play Books",
     featured: true,
     featuredOrder: 3,
-    previewImage: "/photos/pictures (7).png",
+    previewImage: "/projects/all-about-maths-book.gif",
   },
 
   // 4. Pathfinding Visualizer (Code group)
@@ -87,12 +87,12 @@ export const projectsData: Project[] = [
     group: "Code",
     stack: ["JavaScript", "React"],
     role: "Developer",
-    status: "In progress",
+    status: "Live",
     stats: ["4 algorithms", "Unit-tested core"],
-    liveUrl: null,
+    liveUrl: "https://pathfinding.dhairyabhatt.me",
     repoUrl: null,
     featured: false,
-    previewImage: "/photos/pictures (3).png",
+    previewImage: "/projects/pathfinding-visualizer.png",
   },
 
   // 5. DSA in C++ (Code group)

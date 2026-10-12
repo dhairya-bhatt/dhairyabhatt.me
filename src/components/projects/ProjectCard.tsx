@@ -67,6 +67,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
             src={project.previewImage}
             alt={displayTitle}
             fill
+            unoptimized={project.previewImage.endsWith('.gif')}
             sizes="(max-width: 768px) 100vw, 500px"
             className="object-cover group-hover:scale-105 transition-transform duration-700 opacity-80 group-hover:opacity-100"
           />
