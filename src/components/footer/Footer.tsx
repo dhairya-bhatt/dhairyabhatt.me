@@ -15,10 +15,10 @@ export function Footer() {
             <p className="lowercase">
               email:{" "}
               <a
-                href="mailto:dhairya@dhairyabhatt.me"
+                href="mailto:dhairyabhatt.work@gmail.com"
                 className="hover:text-white transition-colors underline-offset-4 hover:underline"
               >
-                dhairya@dhairyabhatt.me
+                dhairyabhatt.work@gmail.com
               </a>
             </p>
           </div>
@@ -46,6 +46,11 @@ export function Footer() {
                     work
                   </Link>
                 </li>
+                <li>
+                  <Link href="/connect" className="hover:text-white transition-colors">
+                    connect
+                  </Link>
+                </li>
               </ul>
             </div>
 
@@ -57,7 +62,7 @@ export function Footer() {
               <ul className="space-y-1 text-sm sm:text-base lowercase">
                 <li>
                   <a
-                    href="https://github.com/dhairyabhatt"
+                    href="https://github.com/dhairya-bhatt"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="hover:text-white transition-colors"

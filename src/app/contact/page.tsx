@@ -1,33 +1,55 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import Link from "next/link";
 import { Header } from "@/components/nav/Header";
 import { WantedCard } from "@/components/stats/WantedCard";
 import { siteConfig } from "@/content/site";
-import { ArrowLeft, Send, CheckCircle2, Github, Linkedin, Code2, Mail } from "lucide-react";
+import {
+  ArrowLeft,
+  ArrowUpRight,
+  Github,
+  Linkedin,
+  Code2,
+  Mail,
+  Instagram,
+  BookOpen,
+  Film,
+  Music,
+  MessageSquare,
+  Tv,
+} from "lucide-react";
 
-export default function ContactPage() {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    subject: "",
-    message: "",
-  });
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSubmitted, setIsSubmitted] = useState(false);
+function SocialPlatformIcon({ icon }: { icon: string }) {
+  switch (icon) {
+    case "github":
+      return <Github className="w-4 h-4" />;
+    case "linkedin":
+      return <Linkedin className="w-4 h-4" />;
+    case "code":
+      return <Code2 className="w-4 h-4" />;
+    case "mail":
+      return <Mail className="w-4 h-4" />;
+    case "instagram":
+      return <Instagram className="w-4 h-4" />;
+    case "discord":
+      return <MessageSquare className="w-4 h-4" />;
+    case "spotify":
+      return <Music className="w-4 h-4" />;
+    case "letterboxd":
+      return <Film className="w-4 h-4" />;
+    case "goodreads":
+      return <BookOpen className="w-4 h-4" />;
+    case "anilist":
+      return <Tv className="w-4 h-4" />;
+    default:
+      return <ArrowUpRight className="w-4 h-4" />;
+  }
+}
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!formData.name || !formData.email || !formData.message) return;
-
-    setIsSubmitting(true);
-    // Simulate serverless response
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setIsSubmitted(true);
-    }, 600);
-  };
+export default function ConnectPage() {
+  const primarySocials = siteConfig.socials.filter((s) => s.isPrimary);
+  const secondarySocials = siteConfig.socials.filter((s) => !s.isPrimary);
 
   return (
     <div className="relative min-h-screen bg-canvas text-ink-primary">
@@ -46,147 +68,102 @@ export default function ContactPage() {
         </div>
 
         {/* Page Title */}
-        <div className="space-y-2 mb-14">
-          <h1 className="font-century text-4xl sm:text-5xl md:text-6xl text-white tracking-tight lowercase">
-            get in touch
+        <div className="space-y-3 mb-14">
+          <h1 className="font-rosegard text-5xl sm:text-6xl md:text-7xl text-white tracking-normal lowercase leading-none">
+            connect
           </h1>
           <p className="font-funnel text-sm sm:text-base text-ink-muted max-w-xl font-light">
-            Open for technical discussions, interesting projects, and collaborative engineering.
+            Open for technical discussions, collaborative engineering, or talking maths, films, books, music, and anime. Reach out directly at{" "}
+            <a
+              href="mailto:dhairyabhatt.work@gmail.com"
+              className="text-white hover:underline underline-offset-4"
+            >
+              dhairyabhatt.work@gmail.com
+            </a>
+            .
           </p>
         </div>
 
-        {/* 2-Column Layout: Direct Links & Form on Left, Wanted Card on Right */}
+        {/* 2-Column Layout: Social & Cultural Channels on Left, Wanted Card on Right */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
-          {/* Left Column: Form & Social Links */}
-          <div className="lg:col-span-7 space-y-12">
-            {/* Direct Channel Cards */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {siteConfig.socials.map((social) => (
-                <a
-                  key={social.name}
-                  href={social.href}
-                  target={social.name === "Email" ? undefined : "_blank"}
-                  rel="noopener noreferrer"
-                  className="p-5 rounded-xl border border-white/[0.08] bg-[#161618] hover:border-white/30 transition-all duration-300 group flex items-start justify-between"
-                >
-                  <div>
-                    <span className="font-mono text-[10px] text-ink-muted uppercase block mb-1">
-                      {social.label}
-                    </span>
-                    <h3 className="font-century text-xl text-white group-hover:text-white transition-colors">
-                      {social.name}
-                    </h3>
-                    <span className="font-mono text-xs text-ink-secondary mt-1 block">
-                      {social.username}
-                    </span>
-                  </div>
-                  <div className="p-2 rounded-lg bg-white/[0.04] text-ink-muted group-hover:text-white group-hover:bg-white/10 transition-colors">
-                    {social.name === "GitHub" && <Github className="w-4 h-4" />}
-                    {social.name === "LinkedIn" && <Linkedin className="w-4 h-4" />}
-                    {social.name === "LeetCode" && <Code2 className="w-4 h-4" />}
-                    {social.name === "Email" && <Mail className="w-4 h-4" />}
-                  </div>
-                </a>
-              ))}
+          {/* Left Column: Primary & Social Links */}
+          <div className="lg:col-span-7 space-y-10">
+            {/* Primary / Engineering & Direct Channels */}
+            <div className="space-y-4">
+              <div className="flex items-center justify-between border-b border-white/[0.08] pb-2">
+                <span className="font-mono text-[11px] uppercase tracking-widest text-ink-muted">
+                  01 / Engineering &amp; Direct
+                </span>
+                <span className="font-mono text-[10px] text-ink-muted/60">
+                  WORK &amp; CODE
+                </span>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {primarySocials.map((social) => (
+                  <a
+                    key={social.name}
+                    href={social.href}
+                    target={social.name === "Email" ? undefined : "_blank"}
+                    rel="noopener noreferrer"
+                    className="p-5 rounded-xl border border-white/[0.08] bg-[#161618] hover:border-white/30 hover:bg-[#1B1B1E] transition-all duration-300 group flex items-start justify-between"
+                  >
+                    <div className="min-w-0 pr-3">
+                      <span className="font-mono text-[10px] text-ink-muted uppercase block mb-1">
+                        {social.label}
+                      </span>
+                      <h3 className="font-rosegard text-2xl text-white group-hover:text-white transition-colors tracking-wide">
+                        {social.name}
+                      </h3>
+                      <span className="font-mono text-xs text-ink-secondary mt-1 block truncate">
+                        {social.username}
+                      </span>
+                    </div>
+                    <div className="p-2.5 rounded-lg bg-white/[0.04] text-ink-muted group-hover:text-white group-hover:bg-white/10 transition-colors shrink-0">
+                      <SocialPlatformIcon icon={social.icon} />
+                    </div>
+                  </a>
+                ))}
+              </div>
             </div>
 
-            {/* Interactive Contact Form */}
-            <div className="p-8 rounded-2xl border border-white/[0.08] bg-[#161618] relative overflow-hidden">
-              <h3 className="font-century text-2xl text-white mb-2">Send a Direct Message</h3>
-              <p className="font-funnel text-xs text-ink-muted mb-6">
-                Fill out the form below or email directly at{" "}
-                <a href="mailto:dhairya@dhairyabhatt.me" className="text-white hover:underline underline-offset-4">
-                  dhairya@dhairyabhatt.me
-                </a>
-              </p>
+            {/* Socials, Media & Cultural Corner */}
+            <div className="space-y-4">
+              <div className="flex items-center justify-between border-b border-white/[0.08] pb-2">
+                <span className="font-mono text-[11px] uppercase tracking-widest text-ink-muted">
+                  02 / Socials &amp; Pursuits
+                </span>
+                <span className="font-mono text-[10px] text-ink-muted/60">
+                  CULTURE &amp; LOGS
+                </span>
+              </div>
 
-              {isSubmitted ? (
-                <div className="p-8 rounded-xl bg-white/[0.03] border border-white/20 text-center space-y-3">
-                  <CheckCircle2 className="w-10 h-10 text-white mx-auto" />
-                  {/* Better Call Saul Easter Egg */}
-                  <h4 className="font-century text-2xl text-white">&ldquo;S&apos;all good, man!&rdquo;</h4>
-                  <p className="font-sans text-sm text-ink-muted max-w-sm mx-auto">
-                    Your message has been captured. I will get back to you promptly.
-                  </p>
-                  <button
-                    onClick={() => {
-                      setIsSubmitted(false);
-                      setFormData({ name: "", email: "", subject: "", message: "" });
-                    }}
-                    className="font-mono text-xs text-white hover:underline underline-offset-4 pt-2 block mx-auto"
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {secondarySocials.map((social) => (
+                  <a
+                    key={social.name}
+                    href={social.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="p-5 rounded-xl border border-white/[0.08] bg-[#161618] hover:border-white/30 hover:bg-[#1B1B1E] transition-all duration-300 group flex items-start justify-between"
                   >
-                    SEND ANOTHER MESSAGE
-                  </button>
-                </div>
-              ) : (
-                <form onSubmit={handleSubmit} className="space-y-4">
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                      <label className="font-mono text-[10px] text-ink-muted uppercase block mb-1">
-                        YOUR NAME *
-                      </label>
-                      <input
-                        type="text"
-                        required
-                        value={formData.name}
-                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                        placeholder="e.g. Jane Doe"
-                        className="w-full px-4 py-2.5 rounded-lg bg-black/40 border border-white/10 text-white font-sans text-sm placeholder:text-ink-muted/40 focus:border-white/50 focus:outline-none transition-colors"
-                      />
+                    <div className="min-w-0 pr-3">
+                      <span className="font-mono text-[10px] text-ink-muted uppercase block mb-1">
+                        {social.label}
+                      </span>
+                      <h3 className="font-rosegard text-2xl text-white group-hover:text-white transition-colors tracking-wide">
+                        {social.name}
+                      </h3>
+                      <span className="font-mono text-xs text-ink-secondary mt-1 block truncate">
+                        {social.username}
+                      </span>
                     </div>
-
-                    <div>
-                      <label className="font-mono text-[10px] text-ink-muted uppercase block mb-1">
-                        YOUR EMAIL *
-                      </label>
-                      <input
-                        type="email"
-                        required
-                        value={formData.email}
-                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                        placeholder="jane@company.com"
-                        className="w-full px-4 py-2.5 rounded-lg bg-black/40 border border-white/10 text-white font-sans text-sm placeholder:text-ink-muted/40 focus:border-white/50 focus:outline-none transition-colors"
-                      />
+                    <div className="p-2.5 rounded-lg bg-white/[0.04] text-ink-muted group-hover:text-white group-hover:bg-white/10 transition-colors shrink-0">
+                      <SocialPlatformIcon icon={social.icon} />
                     </div>
-                  </div>
-
-                  <div>
-                    <label className="font-mono text-[10px] text-ink-muted uppercase block mb-1">
-                      SUBJECT
-                    </label>
-                    <input
-                      type="text"
-                      value={formData.subject}
-                      onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
-                      placeholder="Project Collaboration / Say Hello"
-                      className="w-full px-4 py-2.5 rounded-lg bg-black/40 border border-white/10 text-white font-sans text-sm placeholder:text-ink-muted/40 focus:border-white/50 focus:outline-none transition-colors"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="font-mono text-[10px] text-ink-muted uppercase block mb-1">
-                      MESSAGE *
-                    </label>
-                    <textarea
-                      required
-                      rows={4}
-                      value={formData.message}
-                      onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                      placeholder="Hi Dhairya, I came across your portfolio..."
-                      className="w-full px-4 py-2.5 rounded-lg bg-black/40 border border-white/10 text-white font-sans text-sm placeholder:text-ink-muted/40 focus:border-white/50 focus:outline-none transition-colors resize-none"
-                    />
-                  </div>
-
-                  <button
-                    type="submit"
-                    disabled={isSubmitting}
-                    className="w-full sm:w-auto px-8 py-3 rounded-full bg-white text-black font-mono text-xs uppercase tracking-wider font-semibold hover:bg-white/80 hover:text-black transition-all duration-300 shadow-lg flex items-center justify-center gap-2 cursor-pointer"
-                  >
-                    <span>{isSubmitting ? "TRANSMITTING..." : "TRANSMIT MESSAGE"}</span>
-                    <Send className="w-3.5 h-3.5" />
-                  </button>
-                </form>
-              )}
+                  </a>
+                ))}
+              </div>
             </div>
           </div>
 

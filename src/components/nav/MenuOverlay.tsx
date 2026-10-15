@@ -30,8 +30,8 @@ const NAV_ITEMS = [
   },
   {
     number: "04",
-    label: "contact",
-    href: "/contact",
+    label: "connect",
+    href: "/connect",
   },
 ];
 
